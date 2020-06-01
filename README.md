@@ -6,7 +6,7 @@ Alternatively it can match brightness instead of contours. This works better for
 `AsciiPhoto [options]`
 
 | Option | Explanation |
-| --- | --- |
+| --- |:-- |
 | `--brightness-offset <brightness-offset>`         | Increase or decrease the brightness of the read pixel before processing it.                                                                            |
 | `--brightness-threshold <brightness-threshold>`   | The brightness, expressed in percent, above which pixels are considered empty/white.                                                                   |
 | `--chars-in-row <chars-in-row>`                   | Sets the width of the result to this many characters.                                                                                                  |
@@ -24,7 +24,7 @@ Alternatively it can match brightness instead of contours. This works better for
 | `--ratio <ratio>`                                 | Resizes a picture before creating ASCII art, by multiplying width and height with this percent.                                                        |
 | `--return-to-start`                               | If true, the new result will start on position 0,0 of the console.                                                                                     |
 | `--screen-nr <screen-nr>`                         | Not used at the moment.                                                                                                                                |
-| `--source <File\|Folder\|NotSet\|Screen>`         | The input method: Folder = 1, File = 2, Screen = 4                                                                                                     |
+| `--source <File/Folder/NotSet/Screen>`            | The input method: Folder = 1, File = 2, Screen = 4                                                                                                     |
 | `--verbose`                                       | If true, all information will be written in the console, otherwise only the results will be written. File content is not affected, that is always full.|
 | `--vertical-offset <vertical-offset>`             |                                                                                                                                                        |
 | `--weight-offset-percent <weight-offset-percent>` |                                                                                                                                                        |
@@ -36,26 +36,23 @@ Alternatively it can match brightness instead of contours. This works better for
 ┌────────────∙
 │                                                                             ▄█▌  │
 │                                                                            ▐███  │
-│                                                                           ▄█▀▀█▌ │
-│                            ▄▄═▄  ■▄▄▄⌐ ■▄▄▄,                           _▄▀▀T,██▌ │
-│                            °█▐°  `▐▀Γ  "▐▌Γ                        _▄▄▀▀' _▄▀*▐█ │
-│                            ■█▄■   ▄▄■   ▄▄■           _____▄▄■▄▀▀▀▀▀*__■∙╛*   ▐█ │
-│  ▄___              _______▐██▀█■▐█████~█████▀═■═■═*▀▀""""`'        `""        ▐█ │
-│ ▐█▐▌▀▌█▄■■▀▄▐█■═■▀▀▀▀▀▀═══▀▀▀▀▀╧═▀▀▀▀▀═▀▀══▀═■▄▄▄__                           ▐█ │
-│ ▐████▀▀▀▀▀▀█████████████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄__▀▀■▄▄▄▄▄▄▄▄▄▄,,_     '∙▄▄▄▄▄▐█ │
-│  ▀'      ▄▀°,▄█▀▀▀""""""""▐█▌,'▌`█▌  █"██`/█"""*▀▀▀▄_`▀▀▀▀▀▀████▄▀█▐╓▄,■▄_°"▀██▌ │
-│         ■▀ ,█▀            ▐█╨' ▌ █▌  ▐ ██* ▐       `▀▄ ╘,      `"*═╧═█▌▐▄▐*∙_"▀▌ │
-│        ▐*  █Γ             ▐█.  ▌ █▌  ▐ ██  ▐         ╙▌ ▐             "∙∙██■"██▌ │
-│        ▌  ∙▌             _▐▀▀▐"*█▀*─*╨*▀▀─*▀*═════════█⌐ ▌═▄_            "▀██■█▌ │
-│        ▌  T▌            ■" ▄▄█▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▌ ■▄,*▄             ▐■▀█  │
-│        ▌  ▐▌  _________■ ╓██▌  █▌█▌  ▌`█████▄▄▄▄█▀═████▌ ▌`▌■■▌_________    █▄▌  │
-│        █Γ ∙▌▄Γ █ █__▐██  ███▌  ▌▌█▌▄▄▀═▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█  ▀▀ _√▀""""""█"█■■▄  "   │
-│        ▐▌  ▐,▄█▀▀▀▀▀▀▀▀, ▐▀█Γ ¬▌▌█████▄▄█▄▄█▄▄▄▄▄▄▄▄▄▄▌ ▐▄▄▄▄█▀▀▀▀▀▀▀█▄▀▄ `■     │
-│         █■ ╙▄°*▄═▄═══▄▄█,°▀█■■■)■▀*"▐█▀▀██▀█■▄■▄■¬═▄∙" ■█▌═▄█▄_______■_▄■  ▐Γ    │
-│         `█▄ *▀▄█▄█▄██████▄_`"▐▀)█═══▀▀▀▀▀═█══▄══▀═*°_▄███"___________█▌▌▌▄▄■     │
-│           ▀█▄_°¬═¬__√█▄███████▄▄█▄▄▄▄▄▄▄▄▄█▄■█▄▄▄▄▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀*       │
-│             *▀██▄▄▄▄▄▄███▀▀█▌  █▀██ ▐████▄▄██▐__▄█▀▌                             │
-│                 °"▀▀▀▀"°  └█████▐█████▀████▄▀▀══▀"°                              │
-│                             ▀▀    ╚▀`   ╙▀Γ                                      │
+│                            ____  ____   ___                              ▄█▀"▄█▌ │
+│                            ▀█▄▀  *▐▄▀' ╙▐█▀╛                        __▄▀▀" ▄▀▀▐▌ │
+│                            ╓█▐╖   ▐▄■   ▐▄■           _____▄▄∙▄■■▀▀▀▀"__∙∙▀Γ  ▐█ │
+│  ▄___ _     __   _________▐██▀█▀¬███▀█~███▀█═════****""""`'        `""        ▐█ │
+│ ▐█▐▌▐███████▐████""**_____┴▀╨_═══▀▀══▀═▀┴⌐─▀══■■■■▄__   ,              ,,     ▐█ │
+│ `█▀▀▀°"`""█▀▀▐████▀▀▀▀▀▀▀▀██▀▀▀▀▀██▀▀█▀██▀▀█▀▀▀▀▄▄▄_▀▀█████████▄╖▄∙∩,_ __*■▀██▄█ │
+│         ■▀° ▄▀*°          ▐█■X ▌ █▌  ▐ ██V'▐      `▀▀■`∙  `"""*═▀▀▀▐▄█┤▐▀▀═.`▀█▌ │
+│        ▐▀  █Γ             ▐█.  ▌ ██  ▐ ██  ▐         ▀▄ \            `*∙▀▀▄_▀██▌ │
+│        ▌  :▌             _■▀*▐,*█""****""**╨*****"──═─█⌐ ▌═■▄            `∙█▄■█▌ │
+│        ▌  ▐▌           ■■ ,▄▀▀▀█▀██▀▀█▀█████▀▀▀▀▀█▀██▀█▌ ▌▄■"▀,            └▄▀█  │
+│        ▌  :▌,⌐═▄═▄═══▄▄Γ ▐██▌  ▌▌█▌__▌_████████▄▄▄▄██▄█▌ ▌■Γ╙■▌══════▄═▄__  ▀▀*  │
+│        ▐▌  ■▀_▄▀▄█▀▀▀▀█  ▐██⌐  ▌▐████▄▄▄▄▄▄▄▄▄▄▄▄▄▄__▄▀ ▐__■═█▄▄▄▄▄▄▄█_█_"▀■     │
+│         █, ▐▄*▀▄═▄═══▄▄█,"▀█■■■╖■▀▀▀▐█▀▀████___▄_¬¬_∙" ■█▌¬▄█▄_______,__▐⌐ ▐Γ    │
+│         `▀▄_"▀▄█▄█▄▄█████▄__"▐▀U▌───▀▀▀▀▀═█¬∙█════"__▄███__________▄_█▌█▄▄▄▀     │
+│           *▀▄▄▄_═══■■▀███████▀▀████▀▀▄▄▄▄▀▀▄██▀▀▀██▌""""""""""""""""""▀*"°       │
+│              "▀▀▀▀▄▄▄█▀▀▀" █▌¬■▌`██_▄████▀▀▀██U▄▄▀▀▀                             │
+│                            ▀▀█▀*`▀▀█▀▀ ▀▀█▀*                                     │
+│                                                                                  │
                                                                       ∙────────────┘
 ```
