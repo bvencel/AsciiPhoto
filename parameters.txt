@@ -19,10 +19,12 @@ false
 --return-to-start
 true
 --delay
-10
+1
 --loop-nr
 20000
 --source
 4
 --inverse
 false
+--brightness-offset
+0.2

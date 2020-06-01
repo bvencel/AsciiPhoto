@@ -1,14 +1,13 @@
 ﻿using AsciiPhoto.Entities;
-using AsciiPhoto.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace AsciiPhoto
+namespace AsciiPhoto.Helpers
 {
-    internal static class AsciiConverter
+    internal static class AsciiHelper
     {
         private const string DecorEnd = "∙────────────┘";
 

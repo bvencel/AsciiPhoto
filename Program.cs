@@ -14,10 +14,6 @@ namespace AsciiPhoto
     /// <summary>
     /// Generates ASCII art from image files found in a folder or from screenshot.
     /// This is the main entry point of the application.
-    /// ToDo:
-    /// Introduce inverse colors
-    /// Introduce brightness shifting (less cutoff for full black)
-    /// Obtain full alphabet and use for brightness-based approach
     /// </summary>
     internal class Program
     {
@@ -93,7 +89,7 @@ namespace AsciiPhoto
                 Verbose = verbose,
                 VerticalOffset = verticalOffset,
                 WeightOffset = MathHelper.PercentToDecimal(weightOffsetPercent),
-                WeightTotalPixelNumber = MathHelper.PercentToDecimal(weightTotalPixelNumberPercent)
+                WeightTotalPixelNumber = MathHelper.PercentToDecimal(weightTotalPixelNumberPercent),
             };
 
             AdjustSettings(settings);
@@ -131,6 +127,7 @@ namespace AsciiPhoto
             }
 
             StringBuilder consoleContent = new StringBuilder();
+
             ////consoleContent.AppendLine($"Using settings {settings}");
 
             // Generate letter collection
@@ -138,7 +135,7 @@ namespace AsciiPhoto
             string allLettersString = string.Join(string.Empty, LucidaConsole.Map.Keys);
 
             // Letters with bitmaps
-            List<Letter> letters = AsciiConverter.GenerateLettersWithMap(settings);
+            List<Letter> letters = AsciiHelper.GenerateLettersWithMap(settings);
 
             // Letters for brightness
             Dictionary<string, float> lettersForBrightness = GetLettersForBrightness(settings);
@@ -233,11 +230,11 @@ namespace AsciiPhoto
                         // ************************************
                         // Generate the art based on brightness
                         // ************************************
-                        finalCharacterMap = AsciiConverter.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, lettersForBrightness);
+                        finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, lettersForBrightness);
                     }
                     else
                     {
-                        bool[,] imageMatrix = AsciiConverter.GetPixelMapFromBitmap(settings, loadedBitmap.LoadedBitmap, LucidaConsole.CharacterSize.Width, LucidaConsole.CharacterSize.Height);
+                        bool[,] imageMatrix = AsciiHelper.GetPixelMapFromBitmap(settings, loadedBitmap.LoadedBitmap, LucidaConsole.CharacterSize.Width, LucidaConsole.CharacterSize.Height);
 
                         fileProcessedConsoleMessage = $" ■ Pixel map generated from image (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
 
@@ -249,7 +246,7 @@ namespace AsciiPhoto
                         // *************************
                         // Generate the art
                         // *************************
-                        finalCharacterMap = AsciiConverter.MapLettersOntoBitmap(settings, imageMatrix, letters, LucidaConsole.CharacterSize);
+                        finalCharacterMap = AsciiHelper.MapLettersOntoBitmap(settings, imageMatrix, letters, LucidaConsole.CharacterSize);
                     }
 
                     stopWatch.Stop();
@@ -263,7 +260,7 @@ namespace AsciiPhoto
                     stopWatch.Start();
                     string result =
                         (!string.IsNullOrWhiteSpace(settings.OutputFile) || !settings.PrintResultsAsap) ?
-                            AsciiConverter.GenerateAsciiArtString(settings, finalCharacterMap) :
+                            AsciiHelper.GenerateAsciiArtString(settings, finalCharacterMap) :
                             string.Empty;
 
                     if (!string.IsNullOrWhiteSpace(settings.OutputFile))
@@ -309,7 +306,7 @@ namespace AsciiPhoto
 
             foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.Map)
             {
-                Letter createdLetter = AsciiConverter.CreateLetterFromFontData(simpleLetter.Key);
+                Letter createdLetter = AsciiHelper.CreateLetterFromFontData(simpleLetter.Key);
                 float brightnessRounded = (float)Math.Round((decimal)createdLetter.Brightness, 2);
 
                 if (!result.ContainsValue(brightnessRounded))

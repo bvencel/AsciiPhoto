@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace AsciiPhoto
+namespace AsciiPhoto.Entities
 {
     /// <summary>
     /// Holds the settings of the application, collected from command line.
