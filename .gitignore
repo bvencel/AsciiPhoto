@@ -1,0 +1,9 @@
+# ignore node dependency directories
+node_modules/
+bin/
+obj/
+.vs/
+
+# ignore log files and databases
+*.bak
+*.user

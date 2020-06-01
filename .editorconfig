@@ -1,0 +1,169 @@
+﻿[*.cs]
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none
+
+# CA1707: Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity = none
+
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = none
+
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = none
+
+# CS1591: Missing XML comment for publicly visible type or member. Temporarily disabled
+dotnet_diagnostic.CS1591.severity = none
+
+# CA2227: Collection properties should be read only
+dotnet_diagnostic.CA2227.severity = none
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = none
+
+# IDE0060: Remove unused parameter '' if it is not part of a shipped public API
+dotnet_diagnostic.IDE0060.severity = error
+
+# CA1030: Use events where appropriate
+dotnet_diagnostic.CA1030.severity = none
+
+# CA1054: Change the type of parameter baseUrl of method ArchivingParameters.Create(int, bool, string, float, int, int, string, bool, bool, bool, bool, bool, bool, string, string, bool, bool, float, bool, bool, string, int, bool, float, string, string, DateTime) from string to System.Uri, or provide an overload to ArchivingParameters.Create(int, bool, string, float, int, int, string, bool, bool, bool, bool, bool, bool, string, string, bool, bool, float, bool, bool, string, int, bool, float, string, string, DateTime) that allows baseUrl to be passed as a System.Uri object.
+dotnet_diagnostic.CA1054.severity = none
+
+# CA1055: Change the return type of method UrlHelper.BuildUrl(string, string, string, params QueryParameter[]) from string to System.Uri.
+dotnet_diagnostic.CA1055.severity = none
+
+# CA1056: Change the type of property LanguageEntity.ImageUrl from string to System.Uri.
+dotnet_diagnostic.CA1056.severity = none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1200: Using directive should appear within a namespace declaration
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1208: Using directive for 'System.Reflection' should appear before directive for 'log4net'
+dotnet_diagnostic.SA1208.severity = none
+
+# SA1310: Field 'DailyArchives_GetIncomeForInterval' should not contain an underscore
+dotnet_diagnostic.SA1310.severity = none
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = suggestion
+
+# SA1602: Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = suggestion
+
+# SA1623: The property's documentation summary text should begin with: 'Gets'
+dotnet_diagnostic.SA1623.severity = suggestion
+
+# SA1633: The file header is missing or not located at the top of the file.
+dotnet_diagnostic.SA1633.severity = none
+
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.SA1503.severity = error
+
+# SA1616: Element return value documentation should have text
+dotnet_diagnostic.SA1616.severity = suggestion
+
+# SA1629: Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = none
+
+# SA1413: Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = suggestion
+
+# SA1119: Statement should not use unnecessary parenthesis
+dotnet_diagnostic.SA1119.severity = suggestion
+
+# SA1131: Constant values should appear on the right-hand side of comparisons
+dotnet_diagnostic.SA1131.severity = suggestion
+
+# SA1408: Conditional expressions should declare precedence. Temporarily disabled
+dotnet_diagnostic.SA1408.severity = none
+
+# SA1501: Statement should not be on a single line
+dotnet_diagnostic.SA1501.severity = suggestion
+
+# SA1611: The documentation for parameter '' is missing
+dotnet_diagnostic.SA1611.severity = suggestion
+
+# SA1612: The parameter documentation for 'discounts' should be at position 3.
+dotnet_diagnostic.SA1612.severity = suggestion
+
+# SA1614: Element parameter documentation should have text
+dotnet_diagnostic.SA1614.severity = suggestion
+
+# SA1649: File name should match first type name.
+dotnet_diagnostic.SA1649.severity = error
+
+# SA1102: Query clause should follow previous clause
+dotnet_diagnostic.SA1102.severity = none
+
+# SA1625: Element documentation should not be copied and pasted
+dotnet_diagnostic.SA1625.severity = suggestion
+
+# SA1622: Generic type parameter documentation should have text
+dotnet_diagnostic.SA1622.severity = suggestion
+
+# SA1615: Element return value should be documented
+dotnet_diagnostic.SA1615.severity = none
+
+# SA1618: Generic type parameters should be documented
+dotnet_diagnostic.SA1618.severity = suggestion
+
+# SA1624: Because the property only contains a visible get accessor, the documentation summary text should begin with 'Gets'.
+dotnet_diagnostic.SA1624.severity = suggestion
+
+# SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = suggestion
+
+# SA1401: Field should be private
+dotnet_diagnostic.SA1401.severity = suggestion
+
+# SA1300: Element 'lnkCloseLastTab_Click' should begin with an uppercase letter
+dotnet_diagnostic.SA1300.severity = none
+
+# SA1115: Parameter should follow comma
+dotnet_diagnostic.SA1115.severity = suggestion
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = warning
+
+# From AESiteLink minimal rules
+dotnet_diagnostic.CA1036.severity = none
+dotnet_diagnostic.CA1051.severity = none
+dotnet_diagnostic.CA1304.severity = suggestion 
+dotnet_diagnostic.CA2000.severity = suggestion 
+dotnet_diagnostic.CS1573.severity = suggestion 
+dotnet_diagnostic.CS1998.severity = none
+dotnet_diagnostic.CS4014.severity = suggestion
+
+# CA1044: Because the property getter for ShowDefaultControls is less visible than its setter, either increase the accessibility of its getter or decrease the accessibility of its setter.
+dotnet_diagnostic.CA1044.severity = suggestion
+
+# CA1720: Identifier 'Long' contains type name
+dotnet_diagnostic.CA1720.severity = suggestion
+
+# CA1801: Parameter resxPath of method ConvertGridEntityPlantAndThermToHeatingPlantRest3Entity is never used. Remove the parameter or use it in the method body.
+dotnet_diagnostic.CA1801.severity = none
+
+# CA1815: DateFloatFloatEntity should override Equals.
+dotnet_diagnostic.CA1815.severity = none
+
+# CA2234: Modify 'FormMain.UrlIsAccessible(string)' to call 'WebRequest.Create(Uri)' instead of 'WebRequest.Create(string)'.
+dotnet_diagnostic.CA2234.severity = suggestion
+
+# CA5368: The class GeneratePreview derived from System.Web.UI.Page does not set the ViewStateUserKey property in the OnInit method or Page_Init method
+dotnet_diagnostic.CA5368.severity = suggestion
+
+# CS1572: XML comment has a param tag for 'firstName', but there is no parameter by that name
+dotnet_diagnostic.CS1572.severity = suggestion
+
+# CA1308: In method 'StripPageUrl', replace the call to 'ToLowerInvariant' with 'ToUpperInvariant'.
+dotnet_diagnostic.CA1308.severity = suggestion
+
+# CS0108: 'AdminMoveUsers.Page_PreRender(object, EventArgs)' hides inherited member 'BasePage.Page_PreRender(object, EventArgs)'. Use the new keyword if hiding was intended.
+dotnet_diagnostic.CS0108.severity = suggestion
+
+# CA1814: Prefer jagged arrays over multidimensional
+dotnet_diagnostic.CA1814.severity = none

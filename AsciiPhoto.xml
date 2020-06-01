@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AsciiPhoto</name>
+    </assembly>
+    <members>
+        <member name="M:AsciiPhoto.AsciiConverter.GenerateAsciiFromBitmapByBrightness(AsciiPhoto.ConverterSettings,System.Drawing.Bitmap,System.Collections.Generic.Dictionary{System.String,System.Single})">
+            <summary>
+            Matches the brightness of the image pixels with the brightness of the characters.
+            Main entry point of the class.
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.AsciiConverter.GetPixelMapFromBitmap(AsciiPhoto.ConverterSettings,System.Drawing.Bitmap,System.Int32,System.Int32)">
+            <summary>
+            Gets a bool matrix from the pixels of an image.
+            If the pixel's perceived brightness is low, then the bool will be se tto true.
+            </summary>
+            <param name="nrFilledItems">Number of items in the matrix that were considered black. Used in pattern optimization (less balcks, the better).</param>
+            <returns></returns>
+        </member>
+        <member name="M:AsciiPhoto.AsciiConverter.MapLettersOntoBitmap(AsciiPhoto.ConverterSettings,System.Boolean[0:,0:],System.Collections.Generic.List{AsciiPhoto.Entities.Letter},System.Drawing.Size)">
+            <summary>
+            Generates the art by trying to match character as best as possible onto character-sized pieces of the original image.
+            Main entry point of the class.
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.AsciiConverter.CalculateMatchForLetterUsingFlatArray(AsciiPhoto.ConverterSettings,System.Boolean[],AsciiPhoto.Entities.Letter)">
+            <summary>
+            Overlays the letter over the image fragment and counts the matches.
+            Uses flattened matrix so this method only needs one cycle.
+            </summary>
+            <param name="settings"></param>
+            <param name="subBoolMap"></param>
+            <param name="letter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AsciiPhoto.AsciiConverter.MapBrightnessToAscii(AsciiPhoto.ConverterSettings,System.Single,System.Collections.Generic.Dictionary{System.String,System.Single})">
+            <summary>
+            Assumes the letters are sorted.
+            </summary>
+            <param name="settings"></param>
+            <param name="brightness"></param>
+            <param name="letters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AsciiPhoto.AsciiConverter.MapLetterOntoAPieceOfImage(AsciiPhoto.ConverterSettings,System.Boolean[0:,0:],System.Collections.Generic.List{AsciiPhoto.Entities.Letter},System.Drawing.Size,System.Int32,System.Int32)">
+            <summary>
+            Looks for match on a partial rectangle and decides the character.
+            </summary>
+            <param name="settings"></param>
+            <param name="imageMatrix"></param>
+            <param name="letters"></param>
+            <param name="characterSize"></param>
+            <param name="col"></param>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AsciiPhoto.AsciiConverter.SelectBestMatch(System.Collections.Generic.List{AsciiPhoto.Entities.LetterMatch})">
+            <summary>
+            Selects best match from a list of matches by calculating a score for each.
+            </summary>
+            <param name="allMatches">List of [Letter, matching number]</param>
+            <returns>Best scoring match, containing the Letter, that will likely represent the bitmap.</returns>
+        </member>
+        <member name="T:AsciiPhoto.ConverterSettings">
+            <summary>
+            Holds the settings of the application, collected from command line.
+            </summary>
+        </member>
+        <member name="P:AsciiPhoto.ConverterSettings.BrightnessOffset">
+            <summary>
+            When matching on the brightness of pixels, increase or decrease the brightness of the read pixel before processing it.
+            </summary>
+        </member>
+        <member name="P:AsciiPhoto.ConverterSettings.LoopNr">
+            <summary>
+            Number of times the input source should be processed.
+            </summary>
+        </member>
+        <member name="P:AsciiPhoto.ConverterSettings.ScreenNr">
+            <summary>
+            Which screen should be used as screen input.
+            </summary>
+        </member>
+        <member name="T:AsciiPhoto.Entities.BitmapWithMetadata">
+            <summary>
+            Contains the data about how much a letter covers a piece of the processed image.
+            </summary>
+        </member>
+        <member name="T:AsciiPhoto.Entities.Letter">
+            <summary>
+            Represents a letter that needs to be tested for every part of the processed image.
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.Entities.Letter.#ctor(System.String,System.Boolean[0:,0:],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AsciiPhoto.Entities.Letter"/> class.
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.Entities.Letter.#ctor(System.String,System.Boolean[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AsciiPhoto.Entities.Letter"/> class.
+            If this is the original letter, it can count its own black pixels.
+            </summary>
+            <param name="character"></param>
+            <param name="pixelMap"></param>
+            <param name="horizontalOffset"></param>
+            <param name="verticalOffset"></param>
+        </member>
+        <member name="P:AsciiPhoto.Entities.Letter.FirstBlackPixelStartInFlatMap">
+            <summary>
+            Used to avoid comparing the values from <see cref="P:AsciiPhoto.Entities.Letter.PixelMapFlat"/> before this position.
+            </summary>
+        </member>
+        <member name="P:AsciiPhoto.Entities.Letter.LastBlackPixelStartInFlatMap">
+            <summary>
+            Used to avoid comparing the values from <see cref="P:AsciiPhoto.Entities.Letter.PixelMapFlat"/> after this position.
+            </summary>
+        </member>
+        <member name="P:AsciiPhoto.Entities.Letter.PixelCountInOriginal">
+            <summary>
+            When calculating score, using the number of black pixels, the black pixels of the original letter is the one that matters.
+            </summary>
+        </member>
+        <member name="P:AsciiPhoto.Entities.Letter.PixelMap">
+            <summary>
+            True means that the pixel is black.
+            </summary>
+        </member>
+        <member name="P:AsciiPhoto.Entities.Letter.PixelMapFlat">
+            <summary>
+            Flattened matrix.
+            True means that the pixel is black.
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.Entities.Letter.GetFirstTrue(System.Boolean[])">
+            <summary>
+            Finds the first 'true' value's position in a bool array.
+            </summary>
+            <param name="pixelMapFlat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AsciiPhoto.Entities.Letter.GetLastTrue(System.Boolean[])">
+            <summary>
+            Finds the last 'true' value's position in a bool array.
+            </summary>
+            <param name="pixelMapFlat"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AsciiPhoto.Entities.LetterMatch">
+            <summary>
+            Contains the data about how much a letter covers a piece of the processed image.
+            </summary>
+        </member>
+        <member name="T:AsciiPhoto.Enums.InputSources">
+            <summary>
+            The types of sources where input images can be read from.
+            </summary>
+        </member>
+        <member name="F:AsciiPhoto.LucidaConsole.CharacterSize">
+            <summary>
+            Lucida Console font dimensions at 14pt size
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.Helpers.ArrayHelper.AllIsFalse(System.Boolean[0:,0:])">
+            <summary>
+            Returns false if at least one item is true in the matrix.
+            Used to skip processing empty rectangles.
+            </summary>
+            <param name="matrix"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AsciiPhoto.Helpers.ImageHelper.ColorIsDarkEnough(AsciiPhoto.ConverterSettings,System.Drawing.Color)">
+            <summary>
+            Decides if a pixel should be treated as black, while processing an image.
+            The images are treated as 1 bit, because everything is either black or white.
+            </summary>
+            <param name="settings"></param>
+            <param name="color"></param>
+            <returns>True, if the color is dark enough to be treated as black, otherwise false (white).</returns>
+        </member>
+        <member name="M:AsciiPhoto.Helpers.MathHelper.RoundUpToBeDivisible(System.Int32,System.Int32)">
+            <summary>
+            Examples:
+            (1000,   60) = 1020
+            (2500,  999) = 2997
+            ( 100,   52) =  104
+            ( 100, 1060) = 1060
+            </summary>
+            <param name="original"></param>
+            <param name="beDivisibleBy"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AsciiPhoto.Helpers.StringExtensions">
+            <summary>
+            Extension methods for strings.
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.Helpers.StringExtensions.Indent(System.String,System.Int32,System.Char)">
+            <summary>
+            Adds <paramref name="indentSize"/> number of characters before the string.
+            </summary>
+            <param name="textToBeIndented"></param>
+            <param name="indentSize">Number of instances of <paramref name="indentChar"/> to add.</param>
+            <param name="indentChar">The caracters added <paramref name="indentSize"/> times.</param>
+            <returns>[indentation][originalString]</returns>
+        </member>
+        <member name="T:AsciiPhoto.Program">
+            <summary>
+            Generates ASCII art from image files found in a folder or from screenshot.
+            This is the main entry point of the application.
+            ToDo:
+            Introduce inverse colors
+            Introduce brightness shifting (less cutoff for full black)
+            Obtain full alphabet and use for brightness-based approach
+            </summary>
+        </member>
+        <member name="M:AsciiPhoto.Program.Main(System.Decimal,System.Int32,System.Int32,System.Boolean,System.Int32,System.Int32,System.Boolean,System.Int32,System.Boolean,System.String,System.String,System.Int32,System.Boolean,System.Boolean,System.Int32,System.Boolean,System.Int32,AsciiPhoto.Enums.InputSources,System.Boolean,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Generates ASCII art from image files found in the <paramref name="path" /> directory or screen.
+            </summary>
+            <param name="brightnessOffset">Increase or decrease the brightness of the read pixel before processing it.</param>
+            <param name="path">The folder that is searched in all depth for picture files to process (jpg, png, gif).</param>
+            <param name="brightnessThreshold">The brightness, expressed in percent, above which pixels are considered empty/white.</param>
+            <param name="charsInRow">Sets the width of the result to this many characters.</param>
+            <param name="clearScreen">If true, the console will be cleared before every file.</param>
+            <param name="delay"></param>
+            <param name="horizontalOffset"></param>
+            <param name="inverse"></param>
+            <param name="loopNr"></param>
+            <param name="matchBrightness">If true, the brightness of the image will be processed instead of the oiutlines.</param>
+            <param name="outputFile"></param>
+            <param name="pixelsBetweenRows">Number of pixels assumed between console rows. Text editors usually leave 2 px distance, console leaves 1.</param>
+            <param name="printFontMatrices">If true, bitmatrices of the fonts are printed before starting the processing of the images.</param>
+            <param name="printResultsAsap">If true, characters are printed as soon as they are generated.</param>
+            <param name="ratio">Resizes a picture before creating ASCII art, by multiplying width and height with this percent.</param>
+            <param name="returnToStart">If true, the new result will start on position 0,0 of the console.</param>
+            <param name="screenNr"></param>
+            <param name="source"></param>
+            <param name="verbose">If true, all information will be written in the console, otherwise only the results will be written. File content is not affected, that is always full.</param>
+            <param name="verticalOffset"></param>
+            <param name="weightOffsetPercent"></param>
+            <param name="weightTotalPixelNumberPercent"></param>
+        </member>
+    </members>
+</doc>

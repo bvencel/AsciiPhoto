@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AsciiPhoto": {
+      "commandName": "Project",
+      "commandLineArgs": "@parameters.txt"
+    }
+  }
+}
