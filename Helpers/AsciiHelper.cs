@@ -62,7 +62,7 @@ namespace AsciiPhoto.Helpers
         /// Matches the brightness of the image pixels with the brightness of the characters.
         /// Main entry point of the class.
         /// </summary>
-        public static string[,] GenerateAsciiFromBitmapByBrightness(ConverterSettings settings, Bitmap image, Dictionary<string, float> letters)
+        public static string[,] GenerateAsciiFromBitmapByBrightness(ConverterSettings settings, Bitmap image, Dictionary<string, float> alphabet)
         {
             string[,] resultCharacterMap = new string[image.Width, image.Height];
 
@@ -83,7 +83,7 @@ namespace AsciiPhoto.Helpers
                     Color colorAtTopPixel = image.GetPixel(x, y);
                     float brightness = ImageHelper.GetBrightness(colorAtTopPixel);
 
-                    string resultChar = MapBrightnessToAscii(settings, brightness, letters);
+                    string resultChar = MapBrightnessToAscii(settings, brightness, alphabet);
                     resultCharacterMap[x, y] = resultChar;
 
                     if (settings.PrintResultsAsap)
@@ -113,7 +113,7 @@ namespace AsciiPhoto.Helpers
             return resultCharacterMap;
         }
 
-        public static List<Letter> GenerateLettersWithMap(ConverterSettings settings)
+        public static List<Letter> GenerateAlphabetWithMap(ConverterSettings settings)
         {
             List<Letter> letters = new List<Letter>();
 
@@ -196,7 +196,7 @@ namespace AsciiPhoto.Helpers
         /// Generates the art by trying to match character as best as possible onto character-sized pieces of the original image.
         /// Main entry point of the class.
         /// </summary>
-        public static string[,] MapLettersOntoBitmap(ConverterSettings settings, bool[,] imageMatrix, List<Letter> letters, Size characterSize)
+        public static string[,] MapAlphabetOntoBitmap(ConverterSettings settings, bool[,] imageMatrix, List<Letter> alphabet, Size characterSize)
         {
             int nrColumns = (int)Math.Round((decimal)(imageMatrix.GetLength(0) / characterSize.Width), MidpointRounding.ToEven);
             int nrRows = (int)Math.Round((decimal)(imageMatrix.GetLength(1) / characterSize.Height), MidpointRounding.ToEven);
@@ -223,7 +223,7 @@ namespace AsciiPhoto.Helpers
 
                 for (int col = 0; col < nrColumns; col++)
                 {
-                    resultCharacterMap[col, row] = MapLetterOntoAPieceOfImage(settings, imageMatrix, letters, characterSize, col, row);
+                    resultCharacterMap[col, row] = MapLetterOntoAPieceOfImage(settings, imageMatrix, alphabet, characterSize, col, row);
 
                     if (settings.PrintResultsAsap)
                     {
@@ -288,14 +288,14 @@ namespace AsciiPhoto.Helpers
             return result;
         }
 
-        private static LetterMatch GetMatchedCharacterCodeFlat(ConverterSettings settings, bool[,] subBoolMap, List<Letter> letters)
+        private static LetterMatch GetMatchedCharacterCodeFlat(ConverterSettings settings, bool[,] subBoolMap, List<Letter> alphabet)
         {
 #pragma warning disable CS0162 // Unreachable code detected
             // Charcode/Matches/Nr true items (more "true"s, the worse)
             List<LetterMatch> matchingLetters = new List<LetterMatch>();
             bool[] flattenedSubBoolMap = Letter.FlattenMatrix(subBoolMap);
 
-            foreach (Letter letter in letters)
+            foreach (Letter letter in alphabet)
             {
                 LetterMatch matchForLetterVariant = CalculateMatchForLetterUsingFlatArray(settings, flattenedSubBoolMap, letter);
 
@@ -328,16 +328,16 @@ namespace AsciiPhoto.Helpers
         /// </summary>
         /// <param name="settings"></param>
         /// <param name="brightness"></param>
-        /// <param name="letters"></param>
+        /// <param name="alphabet"></param>
         /// <returns></returns>
-        private static string MapBrightnessToAscii(ConverterSettings settings, float brightness, Dictionary<string, float> letters)
+        private static string MapBrightnessToAscii(ConverterSettings settings, float brightness, Dictionary<string, float> alphabet)
         {
             brightness += settings.BrightnessOffset;
 
             if (settings.InverseBrightness)
             {
                 // Iterate from darkest → brightest
-                foreach (var (key, value) in letters)
+                foreach (var (key, value) in alphabet)
                 {
                     if (value >= brightness)
                     {
@@ -349,7 +349,7 @@ namespace AsciiPhoto.Helpers
             else
             {
                 // Iterate from brigthest → darkest
-                foreach (var (key, value) in letters)
+                foreach (var (key, value) in alphabet)
                 {
                     if (value <= brightness)
                     {
@@ -359,7 +359,7 @@ namespace AsciiPhoto.Helpers
                 }
             }
 
-            return letters.First().Key;
+            return alphabet.First().Key;
         }
 
         /// <summary>
@@ -367,12 +367,12 @@ namespace AsciiPhoto.Helpers
         /// </summary>
         /// <param name="settings"></param>
         /// <param name="imageMatrix"></param>
-        /// <param name="letters"></param>
+        /// <param name="alphabet"></param>
         /// <param name="characterSize"></param>
         /// <param name="col"></param>
         /// <param name="row"></param>
         /// <returns></returns>
-        private static string MapLetterOntoAPieceOfImage(ConverterSettings settings, bool[,] imageMatrix, List<Letter> letters, Size characterSize, int col, int row)
+        private static string MapLetterOntoAPieceOfImage(ConverterSettings settings, bool[,] imageMatrix, List<Letter> alphabet, Size characterSize, int col, int row)
         {
             bool[,] subMatrix = ArrayHelper.ExtractSubMatrix(
                 imageMatrix,
@@ -388,7 +388,7 @@ namespace AsciiPhoto.Helpers
             else
             {
                 // Best matched character
-                LetterMatch bestMatch = GetMatchedCharacterCodeFlat(settings, subMatrix, letters);
+                LetterMatch bestMatch = GetMatchedCharacterCodeFlat(settings, subMatrix, alphabet);
 
                 return (bestMatch is null) ? "@" : bestMatch.MatchedLetter.Character;
             }

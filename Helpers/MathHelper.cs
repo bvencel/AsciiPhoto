@@ -16,9 +16,6 @@ namespace AsciiPhoto.Helpers
         /// ( 100,   52) =  104
         /// ( 100, 1060) = 1060
         /// </summary>
-        /// <param name="original"></param>
-        /// <param name="beDivisibleBy"></param>
-        /// <returns></returns>
         public static int RoundUpToBeDivisible(int original, int beDivisibleBy)
         {
             if (beDivisibleBy == 0)

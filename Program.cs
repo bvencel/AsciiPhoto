@@ -132,23 +132,23 @@ namespace AsciiPhoto
 
             // Generate letter collection
             Stopwatch stopWatch = Stopwatch.StartNew();
-            string allLettersString = string.Join(string.Empty, LucidaConsole.Map.Keys);
+            string alphabetString = string.Join(string.Empty, LucidaConsole.Map.Keys);
 
             // Letters with bitmaps
-            List<Letter> letters = AsciiHelper.GenerateLettersWithMap(settings);
+            List<Letter> alphabet = AsciiHelper.GenerateAlphabetWithMap(settings);
 
             // Letters for brightness
-            Dictionary<string, float> lettersForBrightness = GetLettersForBrightness(settings);
+            Dictionary<string, float> alphabetForBrightness = GetAlphabetForBrightness(settings);
 
             if (settings.PrintFontMatrices)
             {
-                PrintLettersWithProperties(letters);
+                PrintAlphabetWithProperties(alphabet);
             }
 
             stopWatch.Stop();
 
-            consoleContent.AppendLine($"Using characters: '{allLettersString}'");
-            consoleContent.AppendLine($"Loaded {letters.Count} fonts ({stopWatch.Elapsed.TotalMilliseconds:N0}ms)");
+            consoleContent.AppendLine($"Using characters: '{alphabetString}'");
+            consoleContent.AppendLine($"Loaded {alphabet.Count} fonts ({stopWatch.Elapsed.TotalMilliseconds:N0}ms)");
 
             stopWatch.Restart();
             List<BitmapWithMetadata> loadedBitmaps = new List<BitmapWithMetadata>();
@@ -230,7 +230,7 @@ namespace AsciiPhoto
                         // ************************************
                         // Generate the art based on brightness
                         // ************************************
-                        finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, lettersForBrightness);
+                        finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
                     }
                     else
                     {
@@ -246,7 +246,7 @@ namespace AsciiPhoto
                         // *************************
                         // Generate the art
                         // *************************
-                        finalCharacterMap = AsciiHelper.MapLettersOntoBitmap(settings, imageMatrix, letters, LucidaConsole.CharacterSize);
+                        finalCharacterMap = AsciiHelper.MapAlphabetOntoBitmap(settings, imageMatrix, alphabet, LucidaConsole.CharacterSize);
                     }
 
                     stopWatch.Stop();
@@ -300,7 +300,7 @@ namespace AsciiPhoto
             }
         }
 
-        private static Dictionary<string, float> GetLettersForBrightness(ConverterSettings settings)
+        private static Dictionary<string, float> GetAlphabetForBrightness(ConverterSettings settings)
         {
             Dictionary<string, float> result = new Dictionary<string, float>();
 
@@ -329,9 +329,9 @@ namespace AsciiPhoto
             return result;
         }
 
-        private static void PrintLettersWithProperties(List<Letter> letters)
+        private static void PrintAlphabetWithProperties(List<Letter> alphabet)
         {
-            foreach (Letter letter in letters)
+            foreach (Letter letter in alphabet)
             {
                 Console.WriteLine($"{letter.Character}: {letter.Brightness}");
             }
