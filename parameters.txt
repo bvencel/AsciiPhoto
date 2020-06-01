@@ -5,7 +5,7 @@ false
 --print-results-asap
 false
 --pixels-between-rows
-1
+2
 --ratio
 60
 --chars-in-row
