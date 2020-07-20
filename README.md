@@ -6,7 +6,7 @@ Alternatively it can match brightness instead of contours. This works better for
 `AsciiPhoto [options]`
 
 | Option | Explanation |
-| --- |:-- |
+| :-- |:-- |
 | `--brightness-offset <brightness-offset>`         | Increase or decrease the brightness of the read pixel before processing it.                                                                            |
 | `--brightness-threshold <brightness-threshold>`   | The brightness, expressed in percent, above which pixels are considered empty/white.                                                                   |
 | `--chars-in-row <chars-in-row>`                   | Sets the width of the result to this many characters.                                                                                                  |

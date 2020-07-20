@@ -35,6 +35,11 @@ namespace AsciiPhoto
         /// <param name="printFontMatrices">If true, bitmatrices of the fonts are printed before starting the processing of the images.</param>
         /// <param name="printResultsAsap">If true, characters are printed as soon as they are generated.</param>
         /// <param name="ratio">Resizes a picture before creating ASCII art, by multiplying width and height with this percent.</param>
+        /// <param name="refreshSources">
+        /// If true, each frame will be reread from the source, instead of being used from memory.
+        /// This is useful for cases when the source is being modified and needs to be displayed.
+        /// Static sources should use false for this setting.
+        /// </param>
         /// <param name="returnToStart">If true, the new result will start on position 0,0 of the console.</param>
         /// <param name="screenNr">Not used at the moment.</param>
         /// <param name="source">The input method: Folder = 1, File = 2, Screen = 4</param>
@@ -58,6 +63,7 @@ namespace AsciiPhoto
             bool printFontMatrices = false,
             bool printResultsAsap = true,
             int ratio = 50,
+            bool refreshSources = false,
             bool returnToStart = false,
             int screenNr = 0,
             InputSources source = InputSources.NotSet,
@@ -83,6 +89,7 @@ namespace AsciiPhoto
                 PrintFontMatrices = printFontMatrices,
                 PrintResultsAsap = printResultsAsap,
                 ProcessedImageSizeRatio = MathHelper.PercentToDecimal(ratio),
+                RefreshSources = refreshSources,
                 ReturnToStart = returnToStart,
                 ScreenNr = screenNr,
                 Source = source,
@@ -189,6 +196,19 @@ namespace AsciiPhoto
                     if (loadedBitmaps == null || loadedBitmaps.Count == 0)
                     {
                         Console.WriteLine("Could not load screenshot");
+                    }
+                }
+                else
+                {
+                    if (settings.RefreshSources)
+                    {
+                        loadedBitmaps = FileHelper.LoadBitmapsOriginalSize(settings, consoleContent);
+
+                        if (loadedBitmaps == null || loadedBitmaps.Count == 0)
+                        {
+                            Console.WriteLine("Could not load any bitmaps inside loop");
+                            return;
+                        }
                     }
                 }
 

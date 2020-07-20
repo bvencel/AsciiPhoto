@@ -47,6 +47,8 @@ namespace AsciiPhoto.Entities
 
         public decimal ProcessedImageSizeRatio { get; set; }
 
+        public bool RefreshSources { get; set; }
+
         public bool ReturnToStart { get; set; }
 
         /// <summary>
