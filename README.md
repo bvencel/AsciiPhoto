@@ -3,7 +3,7 @@ Console application that generates ASCII art from line drawings or screen region
 Alternatively it can match brightness instead of contours. This works better for other types of pictures than line drawing.
 
 ## Usage
-`AsciiPhoto [options]`
+`AsciiPhoto [options]` or `AsciiPhoto @parameters.txt`
 
 | Option | Explanation |
 | --- |:-- |
