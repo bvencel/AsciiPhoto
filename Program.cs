@@ -20,6 +20,7 @@ namespace AsciiPhoto
         /// <summary>
         /// Generates ASCII art from image files found in the <paramref name="path" /> directory or screen.
         /// </summary>
+        /// <param name="alphabet">Define the characters that the used alphabet is allowed to contain. If a character is in this string, then if will be used. Empty to use all available characters.</param>
         /// <param name="brightnessOffset">Increase or decrease the brightness of the read pixel before processing it.</param>
         /// <param name="brightnessThreshold">The brightness, expressed in percent, above which pixels are considered empty/white.</param>
         /// <param name="charsInRow">Sets the width of the result to this many characters.</param>
@@ -48,6 +49,7 @@ namespace AsciiPhoto
         /// <param name="weightOffsetPercent"></param>
         /// <param name="weightTotalPixelNumberPercent"></param>
         public static void Main(
+            string alphabet = "",
             decimal brightnessOffset = 0.05m,
             int brightnessThreshold = 85,
             int charsInRow = 0,
@@ -72,8 +74,25 @@ namespace AsciiPhoto
             int weightOffsetPercent = 0,
             int weightTotalPixelNumberPercent = 100)
         {
+            Console.WriteLine("│            ╔═┐  ┌─┐┌─┐  ┌─┐          │");
+            Console.WriteLine("│            ║:║  │:││:│  ║:║          │");
+            Console.WriteLine("│-,_,        │'│  │'││'│  │'│     ,,_,-│");
+            Console.WriteLine("│╜─¬,°o,     │°│  │ ││ │  │°│   ,o°,⌐─┴│");
+            Console.WriteLine("│   `x`\\     │ ⌡  │ ││ │  │ │  ,/ x    │");
+            Console.WriteLine("│     \\`\\    '.'  '¡''¡'  '.'  ∩ /     │");
+            Console.WriteLine("│     \\  \\____________________/Γ '     │");
+            Console.WriteLine("│  .⌐°`T]┘^)∙────∩  ,─¬\\∩──∙(\"'[T`\"∙,  │");
+            Console.WriteLine("│∙───┬,°│`──────∩│ /   └│∩────`│°,┬───∙│");
+            Console.WriteLine("│    │,°│_______║┘√     └║_____│°,│    │");
+            Console.WriteLine("│⌐¬,─┴──┴────∩  u/      \\u  │──┴──┴─<⌐-│");
+            Console.WriteLine("│_/_________∩│  /        \\  ╞∩________\\│");
+            Console.WriteLine("│           ║⌡ /__________\\ └║         │");
+            Console.WriteLine("│___________║  ````````````  ║_________│");
+            Console.WriteLine("│           U                U         │");
+
             ConverterSettings settings = new ConverterSettings()
             {
+                Alphabet = alphabet,
                 BrightnessOffset = (float)brightnessOffset,
                 BrightnessThreshold = (float)MathHelper.PercentToDecimal(brightnessThreshold),
                 ClearScreen = clearScreen,
@@ -139,7 +158,7 @@ namespace AsciiPhoto
 
             // Generate letter collection
             Stopwatch stopWatch = Stopwatch.StartNew();
-            string alphabetString = string.Join(string.Empty, LucidaConsole.Map.Keys);
+            string alphabetString = string.Join(string.Empty, LucidaConsole.GetFilteredMap(settings.Alphabet).Keys);
 
             // Letters with bitmaps
             List<Letter> alphabet = AsciiHelper.GenerateAlphabetWithMap(settings);
@@ -324,9 +343,9 @@ namespace AsciiPhoto
         {
             Dictionary<string, float> result = new Dictionary<string, float>();
 
-            foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.Map)
+            foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
             {
-                Letter createdLetter = AsciiHelper.CreateLetterFromFontData(simpleLetter.Key);
+                Letter createdLetter = AsciiHelper.CreateLetterFromFontData(settings, simpleLetter.Key);
                 float brightnessRounded = (float)Math.Round((decimal)createdLetter.Brightness, 2);
 
                 if (!result.ContainsValue(brightnessRounded))

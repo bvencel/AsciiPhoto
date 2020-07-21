@@ -13,9 +13,9 @@ namespace AsciiPhoto.Helpers
 
         private const string DecorStart = "┌────────────∙";
 
-        public static Letter CreateLetterFromFontData(string simpleLetter)
+        public static Letter CreateLetterFromFontData(ConverterSettings settings, string simpleLetter)
         {
-            bool[,] pixelMap = GetPixelMapFromFontData(simpleLetter);
+            bool[,] pixelMap = GetPixelMapFromFontData(settings, simpleLetter);
             Letter createdLetter = new Letter(simpleLetter, pixelMap, 0, 0);
 
             return createdLetter;
@@ -119,9 +119,9 @@ namespace AsciiPhoto.Helpers
 
             int counter = 0;
 
-            foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.Map)
+            foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
             {
-                Letter createdLetter = CreateLetterFromFontData(simpleLetter.Key);
+                Letter createdLetter = CreateLetterFromFontData(settings, simpleLetter.Key);
 
                 letters.Add(createdLetter);
 
@@ -308,7 +308,7 @@ namespace AsciiPhoto.Helpers
 #pragma warning restore CS0162 // Unreachable code detected
         }
 
-        private static bool[,] GetPixelMapFromFontData(string character)
+        private static bool[,] GetPixelMapFromFontData(ConverterSettings settings, string character)
         {
             bool[,] matrix = new bool[LucidaConsole.CharacterSize.Width, LucidaConsole.CharacterSize.Height];
 
@@ -316,7 +316,7 @@ namespace AsciiPhoto.Helpers
             {
                 for (int x = 0; x < LucidaConsole.CharacterSize.Width; x++)
                 {
-                    matrix[x, y] = LucidaConsole.Map[character][y][x].Equals('█');
+                    matrix[x, y] = LucidaConsole.GetFilteredMap(settings.Alphabet)[character][y][x].Equals('█');
                 }
             }
 

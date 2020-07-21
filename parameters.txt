@@ -1,5 +1,5 @@
 ﻿--path
-D:\DormRoom.png
+d:\Documents\Dropbox\Projects\AsciiPhoto\DormRoom\Simplistic.png
 --print-font-matrices
 false
 --print-results-asap
@@ -9,9 +9,9 @@ false
 --ratio
 60
 --chars-in-row
-120
+60
 --match-brightness
-true
+false
 --verbose
 true
 --clear-screen
@@ -30,5 +30,3 @@ false
 0.2
 --refresh-sources
 true
---output-file
-D:\output.txt

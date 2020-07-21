@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace AsciiPhoto
 {
+    /// <summary>
+    /// Lucida Console monospace console font properties.
+    /// </summary>
     internal static class LucidaConsole
     {
         /// <summary>
@@ -13,7 +16,10 @@ namespace AsciiPhoto
         private const int FontHeight = 14;
         private const int FontWidth = 8;
 
-        public static Dictionary<string, string[]> Map => new Dictionary<string, string[]>()
+        /// <summary>
+        /// Gets a dictionary containing the alphabet characters and their pixel maps.
+        /// </summary>
+        private static Dictionary<string, string[]> Map => new Dictionary<string, string[]>()
         {
             [" "] = new string[FontHeight]
             {
@@ -1653,5 +1659,30 @@ namespace AsciiPhoto
                 "████████",
             },
         };
+
+        /// <summary>
+        /// Returns a subset of the map, that are in the limitedAlphabet.
+        /// </summary>
+        /// <param name="limitedAlphabet">A string contianing all the characters that </param>
+        /// <returns>A subset of map.</returns>
+        public static Dictionary<string, string[]> GetFilteredMap(string limitedAlphabet)
+        {
+            if (string.IsNullOrEmpty(limitedAlphabet))
+            {
+                return Map;
+            }
+
+            Dictionary<string, string[]> partialMap = new Dictionary<string, string[]>();
+
+            foreach (KeyValuePair<string, string[]> item in Map)
+            {
+                if (limitedAlphabet.Contains(item.Key, System.StringComparison.Ordinal))
+                {
+                    partialMap.Add(item.Key, item.Value);
+                }
+            }
+
+            return partialMap;
+        }
     }
 }

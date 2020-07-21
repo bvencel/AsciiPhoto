@@ -11,6 +11,8 @@ namespace AsciiPhoto.Entities
     /// </summary>
     public class ConverterSettings
     {
+        public string Alphabet { get; set; }
+
         /// <summary>
         /// When matching on the brightness of pixels, increase or decrease the brightness of the read pixel before processing it.
         /// </summary>
