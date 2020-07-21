@@ -74,21 +74,28 @@ namespace AsciiPhoto
             int weightOffsetPercent = 0,
             int weightTotalPixelNumberPercent = 100)
         {
-            Console.WriteLine("│            ╔═┐  ┌─┐┌─┐  ┌─┐          │");
-            Console.WriteLine("│            ║:║  │:││:│  ║:║          │");
-            Console.WriteLine("│-,_,        │'│  │'││'│  │'│     ,,_,-│");
-            Console.WriteLine("│╜─¬,°o,     │°│  │ ││ │  │°│   ,o°,⌐─┴│");
-            Console.WriteLine("│   `x`\\     │ ⌡  │ ││ │  │ │  ,/ x    │");
-            Console.WriteLine("│     \\`\\    '.'  '¡''¡'  '.'  ∩ /     │");
-            Console.WriteLine("│     \\  \\____________________/Γ '     │");
-            Console.WriteLine("│  .⌐°`T]┘^)∙────∩  ,─¬\\∩──∙(\"'[T`\"∙,  │");
-            Console.WriteLine("│∙───┬,°│`──────∩│ /   └│∩────`│°,┬───∙│");
-            Console.WriteLine("│    │,°│_______║┘√     └║_____│°,│    │");
-            Console.WriteLine("│⌐¬,─┴──┴────∩  u/      \\u  │──┴──┴─<⌐-│");
-            Console.WriteLine("│_/_________∩│  /        \\  ╞∩________\\│");
-            Console.WriteLine("│           ║⌡ /__________\\ └║         │");
-            Console.WriteLine("│___________║  ````````````  ║_________│");
-            Console.WriteLine("│           U                U         │");
+            Console.WriteLine("│-,_,        ╔═┐  ┌─┐  ┌─┐  ┌─┐     ,,_,-│");
+            Console.WriteLine("│╜─¬,°o,     │'│  │ │  │ │  │'│   ,o°,⌐─┴│");
+            Console.WriteLine("│   `x`\\     │°⌡  │ │  │ │  │°│  ,/ x    │");
+            Console.WriteLine("│     \\`\\    '.'  '¡'  '¡'  '.'  ∩ /     │");
+            Console.WriteLine("│     \\  \\______________________/Γ '     │");
+            Console.WriteLine("│  .⌐°`T]┘^)∙────∩  ,───¬\\∩──∙(\"'[T`\"∙,  │");
+            Console.WriteLine("│∙───┬,°│`──────∩│ /     └│∩────`│°,┬───∙│");
+            Console.WriteLine("│ ┌─┐│,°│_______║┘√    -  └║_____│°,│    │");
+            Console.WriteLine("│⌐¬,─┴──┴────∩  u / -     \\u  ∩──┴──┴─<⌐-│");
+            Console.WriteLine("│_/_________∩│   /      -- \\  ╞∩________\\│");
+            Console.WriteLine("│           ║⌡  /___________\\ └║         │");
+            Console.WriteLine("│___________║   `````````````  ║_________│");
+            Console.WriteLine("│           U                  U         │");
+            Console.WriteLine();
+            Console.WriteLine("│         ╔═┐  ┌─┐        │");
+            Console.WriteLine("│         ║°║  │:│        │");
+            Console.WriteLine("│ .⌐°`T]  '¡'  '.' [T`─¬. │");
+            Console.WriteLine("│∙──┬,°│───────────│°,┬──∙│");
+            Console.WriteLine("│⌐¬,┴──┴──∩      ∩─┴──┴<⌐-│");
+            Console.WriteLine("│_/______∩│ /──\\ ╞∩_____`\\│");
+            Console.WriteLine("│________║⌡/____\\└║_______│");
+            Console.WriteLine("│        U `````` U       │");
 
             ConverterSettings settings = new ConverterSettings()
             {
