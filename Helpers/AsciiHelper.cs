@@ -9,9 +9,9 @@ namespace AsciiPhoto.Helpers
 {
     internal static class AsciiHelper
     {
-        private const string DecorEnd = "∙────────────┘";
+        public const string DecorEnd = "∙────────────┘";
 
-        private const string DecorStart = "┌────────────∙";
+        public const string DecorStart = "┌────────────∙";
 
         public static Letter CreateLetterFromFontData(ConverterSettings settings, string simpleLetter)
         {
@@ -21,7 +21,60 @@ namespace AsciiPhoto.Helpers
             return createdLetter;
         }
 
-        public static string GenerateAsciiArtString(ConverterSettings settings, string[,] characterMatrix)
+        public static List<Letter> GenerateAlphabetWithMap(ConverterSettings settings)
+        {
+            List<Letter> letters = new List<Letter>();
+
+            int counter = 0;
+
+            foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
+            {
+                Letter createdLetter = CreateLetterFromFontData(settings, simpleLetter.Key);
+
+                letters.Add(createdLetter);
+
+                if (settings.PrintFontMatrices)
+                {
+#pragma warning disable CS0162 // Unreachable code detected
+                    Console.WriteLine($"{createdLetter.Character} (first true: {createdLetter.FirstBlackPixelStartInFlatMap}, last true: {createdLetter.LastBlackPixelStartInFlatMap})");
+                    PrintMatrix(createdLetter.PixelMap, 1);
+                    Console.WriteLine();
+                    Console.WriteLine();
+#pragma warning restore CS0162 // Unreachable code detected
+                }
+
+                // If needed, create variants
+                // Variants are not needed if brightness is matched
+                if (!settings.MatchBrightness && (settings.HorizontalOffset != 0 || settings.VerticalOffset != 0))
+                {
+                    for (int y = -settings.VerticalOffset; y <= settings.VerticalOffset; y++)
+                    {
+                        for (int x = -settings.HorizontalOffset; x <= settings.HorizontalOffset; x++)
+                        {
+                            if (x == 0 && y == 0)
+                            {
+                                // 0, 0 is already generated
+                                continue;
+                            }
+
+                            int offsetCol = x;
+                            int offsetRow = y;
+
+                            bool[,] shiftedMatrix = ArrayHelper.ShiftMatrix(createdLetter.PixelMap, offsetCol, offsetRow);
+                            Letter letterVariant = new Letter(createdLetter.Character, shiftedMatrix, offsetCol, offsetRow, createdLetter.PixelCountInOriginal);
+
+                            letters.Add(letterVariant);
+                        }
+                    }
+                }
+
+                counter++;
+            }
+
+            return letters;
+        }
+
+        public static string GenerateAsciiArtString(ConverterSettings settings, Letter[,] characterMatrix)
         {
             StringBuilder result = new StringBuilder();
 
@@ -39,7 +92,7 @@ namespace AsciiPhoto.Helpers
 
                 for (int x = 0; x < characterMatrix.GetLength(0); x++)
                 {
-                    result.Append(characterMatrix[x, y]);
+                    result.Append(characterMatrix[x, y].Character);
                 }
 
                 if (settings.Verbose)
@@ -113,68 +166,15 @@ namespace AsciiPhoto.Helpers
             return resultCharacterMap;
         }
 
-        public static List<Letter> GenerateAlphabetWithMap(ConverterSettings settings)
-        {
-            List<Letter> letters = new List<Letter>();
-
-            int counter = 0;
-
-            foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
-            {
-                Letter createdLetter = CreateLetterFromFontData(settings, simpleLetter.Key);
-
-                letters.Add(createdLetter);
-
-                if (settings.PrintFontMatrices)
-                {
-#pragma warning disable CS0162 // Unreachable code detected
-                    Console.WriteLine($"{createdLetter.Character} (first true: {createdLetter.FirstBlackPixelStartInFlatMap}, last true: {createdLetter.LastBlackPixelStartInFlatMap})");
-                    PrintMatrix(createdLetter.PixelMap, 1);
-                    Console.WriteLine();
-                    Console.WriteLine();
-#pragma warning restore CS0162 // Unreachable code detected
-                }
-
-                // If needed, create variants
-                // Variants are not needed if brightness is matched
-                if (!settings.MatchBrightness && (settings.HorizontalOffset != 0 || settings.VerticalOffset != 0))
-                {
-                    for (int y = -settings.VerticalOffset; y <= settings.VerticalOffset; y++)
-                    {
-                        for (int x = -settings.HorizontalOffset; x <= settings.HorizontalOffset; x++)
-                        {
-                            if (x == 0 && y == 0)
-                            {
-                                // 0, 0 is already generated
-                                continue;
-                            }
-
-                            int offsetCol = x;
-                            int offsetRow = y;
-
-                            bool[,] shiftedMatrix = ArrayHelper.ShiftMatrix(createdLetter.PixelMap, offsetCol, offsetRow);
-                            Letter letterVariant = new Letter(createdLetter.Character, shiftedMatrix, offsetCol, offsetRow, createdLetter.PixelCountInOriginal);
-
-                            letters.Add(letterVariant);
-                        }
-                    }
-                }
-
-                counter++;
-            }
-
-            return letters;
-        }
-
         /// <summary>
         /// Gets a bool matrix from the pixels of an image.
         /// If the pixel's perceived brightness is low, then the bool will be se tto true.
         /// </summary>
         /// <param name="nrFilledItems">Number of items in the matrix that were considered black. Used in pattern optimization (less balcks, the better).</param>
         /// <returns></returns>
-        public static bool[,] GetPixelMapFromBitmap(ConverterSettings settings, Bitmap image, int widthMustBeDivisibleWith, int heightMustBeDivisibleWith)
+        public static decimal[,] GetPixelMapFromBitmap(ConverterSettings settings, Bitmap image, int widthMustBeDivisibleWith, int heightMustBeDivisibleWith)
         {
-            bool[,] matrix = new bool[MathHelper.RoundUpToBeDivisible(image.Width, widthMustBeDivisibleWith), MathHelper.RoundUpToBeDivisible(image.Height, heightMustBeDivisibleWith)];
+            decimal[,] matrix = new decimal[MathHelper.RoundUpToBeDivisible(image.Width, widthMustBeDivisibleWith), MathHelper.RoundUpToBeDivisible(image.Height, heightMustBeDivisibleWith)];
 
             ////Console.WriteLine($"Rounding [{image.Width}x{image.Height}] image up to {matrix.GetLength(0)}x{matrix.GetLength(1)} to make width divisible by {widthMustBeDivisibleWith} and height by {heightMustBeDivisibleWith}");
 
@@ -185,7 +185,7 @@ namespace AsciiPhoto.Helpers
                     Color colorAtPixel = image.GetPixel(x, y);
 
                     // Workaround: Transparent color is identified by name "0"
-                    matrix[x, y] = ImageHelper.ColorIsDarkEnough(settings, colorAtPixel);
+                    matrix[x, y] = ImageHelper.GetColorStrength(settings, colorAtPixel);
                 }
             }
 
@@ -196,12 +196,12 @@ namespace AsciiPhoto.Helpers
         /// Generates the art by trying to match character as best as possible onto character-sized pieces of the original image.
         /// Main entry point of the class.
         /// </summary>
-        public static string[,] MapAlphabetOntoBitmap(ConverterSettings settings, bool[,] imageMatrix, List<Letter> alphabet, Size characterSize)
+        public static Letter[,] MapAlphabetOntoBitmap(ConverterSettings settings, decimal[,] imageMatrix, List<Letter> alphabet, Size characterSize)
         {
             int nrColumns = (int)Math.Round((decimal)(imageMatrix.GetLength(0) / characterSize.Width), MidpointRounding.ToEven);
             int nrRows = (int)Math.Round((decimal)(imageMatrix.GetLength(1) / characterSize.Height), MidpointRounding.ToEven);
 
-            string[,] resultCharacterMap = new string[nrColumns, nrRows];
+            Letter[,] resultCharacterMap = new Letter[nrColumns, nrRows];
 
             if (settings.PrintResultsAsap)
             {
@@ -223,7 +223,7 @@ namespace AsciiPhoto.Helpers
 
                 for (int col = 0; col < nrColumns; col++)
                 {
-                    resultCharacterMap[col, row] = MapLetterOntoAPieceOfImage(settings, imageMatrix, alphabet, characterSize, col, row);
+                    resultCharacterMap[col, row] = MapLetterOntoPieceOfImage(settings, imageMatrix, alphabet, characterSize, col, row);
 
                     if (settings.PrintResultsAsap)
                     {
@@ -256,44 +256,60 @@ namespace AsciiPhoto.Helpers
         /// Uses flattened matrix so this method only needs one cycle.
         /// </summary>
         /// <param name="settings"></param>
-        /// <param name="subBoolMap"></param>
+        /// <param name="subMap"></param>
         /// <param name="letter"></param>
         /// <returns></returns>
-        private static LetterMatch CalculateMatchForLetterUsingFlatArray(ConverterSettings settings, bool[] subBoolMap, Letter letter)
+        private static LetterMatch CalculateMatchForLetterUsingFlatArray(ConverterSettings settings, decimal[] subMap, Letter letter)
         {
             int nrMatchingBlackPixels = 0;
+            int nrMatchingGrayPixels = 0;
 
             // There is no need to compare before the first "true" value
-            int startPos = Math.Min(Letter.GetFirstTrue(subBoolMap), letter.FirstBlackPixelStartInFlatMap);
-            int endPos = Math.Min(Letter.GetLastTrue(subBoolMap), letter.LastBlackPixelStartInFlatMap);
+            int startPos = Math.Min(Letter.GetFirstNonZero(subMap), letter.FirstBlackPixelStartInFlatMap);
+            int endPos = Math.Min(Letter.GetLastNonZero(subMap), letter.LastBlackPixelStartInFlatMap);
 
             for (int i = startPos; i <= endPos; i++)
             {
                 // **********************
                 // Matching formula
                 // **********************
-                if (subBoolMap[i] && letter.PixelMapFlat[i])
+
+                // If letter has a pixel here
+                if (letter.PixelMapFlat[i])
                 {
-                    // If black pixel matches
-                    nrMatchingBlackPixels++;
+                    if (subMap[i] == ImageHelper.MaxPencilStrength)
+                    {
+                        // If black pixel matches
+                        nrMatchingBlackPixels++;
+                    }
+
+                    if (subMap[i] == ImageHelper.HalfPencilStrength)
+                    {
+                        // If black pixel matches
+                        nrMatchingGrayPixels++;
+                    }
                 }
             }
+
+            // Create a new letter with color info as well
+            Letter resultLetter = (Letter)letter.Clone();
+            resultLetter.TextColor = nrMatchingGrayPixels > nrMatchingBlackPixels ? (ConsoleColor?)ConsoleColor.DarkGray : null;
 
             LetterMatch result = new LetterMatch(
                 settings.WeightOffset,
                 settings.WeightTotalPixelNumber,
-                letter,
-                nrMatchingBlackPixels);
+                resultLetter,
+                nrMatchingBlackPixels + nrMatchingGrayPixels);
 
             return result;
         }
 
-        private static LetterMatch GetMatchedCharacterCodeFlat(ConverterSettings settings, bool[,] subBoolMap, List<Letter> alphabet)
+        private static LetterMatch GetMatchedCharacterCodeFlat(ConverterSettings settings, decimal[,] subBoolMap, List<Letter> alphabet)
         {
 #pragma warning disable CS0162 // Unreachable code detected
             // Charcode/Matches/Nr true items (more "true"s, the worse)
             List<LetterMatch> matchingLetters = new List<LetterMatch>();
-            bool[] flattenedSubBoolMap = Letter.FlattenMatrix(subBoolMap);
+            decimal[] flattenedSubBoolMap = Letter.FlattenMatrix(subBoolMap);
 
             foreach (Letter letter in alphabet)
             {
@@ -371,26 +387,32 @@ namespace AsciiPhoto.Helpers
         /// <param name="characterSize"></param>
         /// <param name="col"></param>
         /// <param name="row"></param>
+        /// <param name="textColor"></param>
         /// <returns></returns>
-        private static string MapLetterOntoAPieceOfImage(ConverterSettings settings, bool[,] imageMatrix, List<Letter> alphabet, Size characterSize, int col, int row)
+        private static Letter MapLetterOntoPieceOfImage(ConverterSettings settings, decimal[,] imageMatrix, List<Letter> alphabet, Size characterSize, int col, int row)
         {
-            bool[,] subMatrix = ArrayHelper.ExtractSubMatrix(
+            decimal[,] subMatrix = ArrayHelper.ExtractSubMatrix(
                 imageMatrix,
                 col * characterSize.Width,
                 (col + 1) * characterSize.Width,
                 row * characterSize.Height,
                 (row + 1) * characterSize.Height);
 
-            if (ArrayHelper.AllIsFalse(subMatrix))
+            if (ArrayHelper.AllIsZero(subMatrix))
             {
-                return " ";
+                return alphabet[0];
             }
             else
             {
                 // Best matched character
                 LetterMatch bestMatch = GetMatchedCharacterCodeFlat(settings, subMatrix, alphabet);
 
-                return (bestMatch is null) ? "@" : bestMatch.MatchedLetter.Character;
+                if (bestMatch == null)
+                {
+                    return alphabet[0];
+                }
+
+                return bestMatch.MatchedLetter;
             }
         }
 

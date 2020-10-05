@@ -7,6 +7,10 @@ namespace AsciiPhoto.Helpers
 {
     public static class ImageHelper
     {
+        public const decimal HalfPencilStrength = 0.5m;
+
+        public const decimal MaxPencilStrength = 1m;
+
         /// <summary>
         /// Decides if a pixel should be treated as black, while processing an image.
         /// The images are treated as 1 bit, because everything is either black or white.
@@ -21,7 +25,7 @@ namespace AsciiPhoto.Helpers
                 return false;
             }
 
-            return color.Name != "0" && color.GetBrightness() < settings.BrightnessThreshold;
+            return color.Name != "0" && color.GetBrightness() < settings.MinPixelDarkness;
         }
 
         public static float GetBrightness(Color color)
@@ -32,6 +36,28 @@ namespace AsciiPhoto.Helpers
             }
 
             return color.GetBrightness();
+        }
+
+        /// <summary>
+        /// Decides if a pixel should be treated as black, while processing an image.
+        /// The images are treated as 1 bit, because everything is either black or white.
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="color"></param>
+        /// <returns>True, if the color is dark enough to be treated as black, otherwise false (white).</returns>
+        public static decimal GetColorStrength(ConverterSettings settings, Color color)
+        {
+            if (settings is null)
+            {
+                return 0m;
+            }
+
+            if (color.Name == "0")
+            {
+                return 0m;
+            }
+
+            return MapPencilStrengthToFixedValues((decimal)color.GetBrightness(), (decimal)settings.MinPixelDarkness);
         }
 
         public static List<BitmapWithMetadata> LoadScreenshot(ConverterSettings settings)
@@ -131,6 +157,30 @@ namespace AsciiPhoto.Helpers
                 CopyPixelOperation.SourceCopy);
 
             return bmpScreenshot;
+        }
+
+        /// <summary>
+        /// Temporarily map all black level between bottomThreshold - 0.5 - 0.
+        /// </summary>
+        /// <param name="brightness"></param>
+        /// <param name="topThreshold"></param>
+        /// <returns></returns>
+        private static decimal MapPencilStrengthToFixedValues(decimal brightness, decimal minimumColorStrength)
+        {
+            decimal colorStrength = 1 - brightness;
+
+            if (colorStrength >= minimumColorStrength)
+            {
+                return MaxPencilStrength;
+            }
+
+            // If pencil strength is half strong as the threshold, still register the color as less intensive (usually gray).
+            if (colorStrength < minimumColorStrength && colorStrength >= 1 - (2 * (1 - minimumColorStrength)))
+            {
+                return HalfPencilStrength;
+            }
+
+            return 0m;
         }
     }
 }

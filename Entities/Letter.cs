@@ -1,9 +1,11 @@
-﻿namespace AsciiPhoto.Entities
+﻿using System;
+
+namespace AsciiPhoto.Entities
 {
     /// <summary>
     /// Represents a letter that needs to be tested for every part of the processed image.
     /// </summary>
-    internal class Letter
+    internal class Letter : ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Letter"/> class.
@@ -20,9 +22,9 @@
             FirstBlackPixelStartInFlatMap = GetFirstTrue(PixelMapFlat);
             LastBlackPixelStartInFlatMap = GetLastTrue(PixelMapFlat);
 
-            Brightness = 1f - ((float)CountTrueValues(PixelMap) / (float)(PixelMap.GetLength(0) * PixelMap.GetLength(1)));
-            BrightnessBottom = 1f - (CountTrueValuesBottom(PixelMap) / 56f);
-            BrightnessTop = 1f - (CountTrueValuesTop(PixelMap) / 56f);
+            CharacterBrightnessBasedOnPixels = 1f - (CountTrueValues(PixelMap) / (PixelMap.GetLength(0) * PixelMap.GetLength(1)));
+            CharacterBrightnessBasedOnPixelsBottom = 1f - (CountTrueValuesBottom(PixelMap) / 56f);
+            CharacterBrightnessBasedOnPixelsTop = 1f - (CountTrueValuesTop(PixelMap) / 56f);
         }
 
         /// <summary>
@@ -39,13 +41,13 @@
             PixelCountInOriginal = CountTrueValues(PixelMap);
         }
 
-        public float Brightness { get; }
-
-        public float BrightnessBottom { get; }
-
-        public float BrightnessTop { get; }
-
         public string Character { get; set; }
+
+        public float CharacterBrightnessBasedOnPixels { get; }
+
+        public float CharacterBrightnessBasedOnPixelsBottom { get; }
+
+        public float CharacterBrightnessBasedOnPixelsTop { get; }
 
         /// <summary>
         /// Used to avoid comparing the values from <see cref="PixelMapFlat"/> before this position.
@@ -74,6 +76,11 @@
         /// True means that the pixel is black.
         /// </summary>
         public bool[] PixelMapFlat { get; set; }
+
+        /// <summary>
+        /// The color which will be used to display the character in the console.
+        /// </summary>
+        public ConsoleColor? TextColor { get; set; }
 
         public int VerticalOffset { get; set; }
 
@@ -147,6 +154,29 @@
         }
 
         /// <summary>
+        /// Finds the first larger than 0 value's position in a decimal array.
+        /// </summary>
+        /// <param name="pixelMapFlat"></param>
+        /// <returns></returns>
+        public static int GetFirstNonZero(decimal[] pixelMapFlat)
+        {
+            if (pixelMapFlat.Length == 0)
+            {
+                return 0;
+            }
+
+            for (int i = 0; i < pixelMapFlat.Length; i++)
+            {
+                if (pixelMapFlat[i] > 0m)
+                {
+                    return i;
+                }
+            }
+
+            return pixelMapFlat.Length - 1;
+        }
+
+        /// <summary>
         /// Finds the first 'true' value's position in a bool array.
         /// </summary>
         /// <param name="pixelMapFlat"></param>
@@ -174,6 +204,29 @@
         /// </summary>
         /// <param name="pixelMapFlat"></param>
         /// <returns></returns>
+        public static int GetLastNonZero(decimal[] pixelMapFlat)
+        {
+            if (pixelMapFlat.Length == 0)
+            {
+                return 0;
+            }
+
+            for (int i = pixelMapFlat.Length - 1; i >= 0; i--)
+            {
+                if (pixelMapFlat[i] > 0m)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Finds the last 'true' value's position in a bool array.
+        /// </summary>
+        /// <param name="pixelMapFlat"></param>
+        /// <returns></returns>
         public static int GetLastTrue(bool[] pixelMapFlat)
         {
             if (pixelMapFlat.Length == 0)
@@ -190,6 +243,24 @@
             }
 
             return 0;
+        }
+
+        /// <summary>
+        /// Creates a clone of the current class to break references.
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            Letter clone = new Letter(
+                Character,
+                PixelMap,
+                HorizontalOffset,
+                VerticalOffset,
+                PixelCountInOriginal);
+
+            clone.TextColor = TextColor;
+
+            return clone;
         }
     }
 }

@@ -18,8 +18,6 @@ namespace AsciiPhoto.Entities
         /// </summary>
         public float BrightnessOffset { get; set; }
 
-        public float BrightnessThreshold { get; set; }
-
         public bool ClearScreen { get; set; }
 
         public int DelayBetweenFramesMs { get; set; }
@@ -34,6 +32,8 @@ namespace AsciiPhoto.Entities
         public int LoopNr { get; set; }
 
         public bool MatchBrightness { get; set; }
+
+        public float MinPixelDarkness { get; set; }
 
         public int NrCharactersInARow { get; set; }
 

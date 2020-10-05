@@ -22,7 +22,7 @@ namespace AsciiPhoto
         /// </summary>
         /// <param name="alphabet">Define the characters that the used alphabet is allowed to contain. If a character is in this string, then if will be used. Empty to use all available characters.</param>
         /// <param name="brightnessOffset">Increase or decrease the brightness of the read pixel before processing it.</param>
-        /// <param name="brightnessThreshold">The brightness, expressed in percent, above which pixels are considered empty/white.</param>
+        /// <param name="minPixelDarkness">The minimum darkness of a pixel, expressed in percent to make a pixel register. Below this value pixels are considered empty/white.</param>
         /// <param name="charsInRow">Sets the width of the result to this many characters.</param>
         /// <param name="clearScreen">If true, the console will be cleared before every file.</param>
         /// <param name="delay">The wait time after displaying each frame in milliseconds.</param>
@@ -51,7 +51,7 @@ namespace AsciiPhoto
         public static void Main(
             string alphabet = "",
             decimal brightnessOffset = 0.05m,
-            int brightnessThreshold = 85,
+            decimal minPixelDarkness = 0.85m,
             int charsInRow = 0,
             bool clearScreen = false,
             int delay = 0,
@@ -74,34 +74,11 @@ namespace AsciiPhoto
             int weightOffsetPercent = 0,
             int weightTotalPixelNumberPercent = 100)
         {
-            Console.WriteLine("│-,_,        ╔═┐  ┌─┐  ┌─┐  ┌─┐     ,,_,-│");
-            Console.WriteLine("│╜─¬,°o,     │'│  │ │  │ │  │'│   ,o°,⌐─┴│");
-            Console.WriteLine("│   `x`\\     │°⌡  │ │  │ │  │°│  ,/ x    │");
-            Console.WriteLine("│     \\`\\    '.'  '¡'  '¡'  '.'  ∩ /     │");
-            Console.WriteLine("│     \\  \\______________________/Γ '     │");
-            Console.WriteLine("│  .⌐°`T]┘^)∙────∩  ,───¬\\∩──∙(\"'[T`\"∙,  │");
-            Console.WriteLine("│∙───┬,°│`──────∩│ /     └│∩────`│°,┬───∙│");
-            Console.WriteLine("│ ┌─┐│,°│_______║┘√    -  └║_____│°,│    │");
-            Console.WriteLine("│⌐¬,─┴──┴────∩  u / -     \\u  ∩──┴──┴─<⌐-│");
-            Console.WriteLine("│_/_________∩│   /      -- \\  ╞∩________\\│");
-            Console.WriteLine("│           ║⌡  /___________\\ └║         │");
-            Console.WriteLine("│___________║   `````````````  ║_________│");
-            Console.WriteLine("│           U                  U         │");
-            Console.WriteLine();
-            Console.WriteLine("│         ╔═┐  ┌─┐        │");
-            Console.WriteLine("│         ║°║  │:│        │");
-            Console.WriteLine("│ .⌐°`T]  '¡'  '.' [T`─¬. │");
-            Console.WriteLine("│∙──┬,°│───────────│°,┬──∙│");
-            Console.WriteLine("│⌐¬,┴──┴──∩      ∩─┴──┴<⌐-│");
-            Console.WriteLine("│_/______∩│ /──\\ ╞∩_____`\\│");
-            Console.WriteLine("│________║⌡/____\\└║_______│");
-            Console.WriteLine("│        U `````` U       │");
-
             ConverterSettings settings = new ConverterSettings()
             {
                 Alphabet = alphabet,
                 BrightnessOffset = (float)brightnessOffset,
-                BrightnessThreshold = (float)MathHelper.PercentToDecimal(brightnessThreshold),
+                MinPixelDarkness = (float)minPixelDarkness,
                 ClearScreen = clearScreen,
                 DelayBetweenFramesMs = delay,
                 HorizontalOffset = horizontalOffset,
@@ -256,8 +233,8 @@ namespace AsciiPhoto
 
                     stopWatch.Restart();
 
-                    string[,] finalCharacterMap;
-                    string fileProcessedConsoleMessage;
+                    Letter[,] finalCharacterMap = new Letter[0, 0];
+                    string fileProcessedConsoleMessage = string.Empty;
 
                     if (settings.PrintResultsAsap && settings.ClearScreen)
                     {
@@ -266,21 +243,21 @@ namespace AsciiPhoto
 
                     if (settings.NrCharactersInARow > 0 && settings.MatchBrightness)
                     {
-                        fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
+                        //fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
 
-                        if (settings.Verbose)
-                        {
-                            Console.WriteLine(fileProcessedConsoleMessage);
-                        }
+                        //if (settings.Verbose)
+                        //{
+                        //    Console.WriteLine(fileProcessedConsoleMessage);
+                        //}
 
-                        // ************************************
-                        // Generate the art based on brightness
-                        // ************************************
-                        finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
+                        //// ************************************
+                        //// Generate the art based on brightness
+                        //// ************************************
+                        //finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
                     }
                     else
                     {
-                        bool[,] imageMatrix = AsciiHelper.GetPixelMapFromBitmap(settings, loadedBitmap.LoadedBitmap, LucidaConsole.CharacterSize.Width, LucidaConsole.CharacterSize.Height);
+                        decimal[,] imageMatrix = AsciiHelper.GetPixelMapFromBitmap(settings, loadedBitmap.LoadedBitmap, LucidaConsole.CharacterSize.Width, LucidaConsole.CharacterSize.Height);
 
                         fileProcessedConsoleMessage = $" ■ Pixel map generated from image (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
 
@@ -304,7 +281,9 @@ namespace AsciiPhoto
                     }
 
                     stopWatch.Start();
-                    string result =
+
+                    // Final art as text
+                    string resultForFile =
                         (!string.IsNullOrWhiteSpace(settings.OutputFile) || !settings.PrintResultsAsap) ?
                             AsciiHelper.GenerateAsciiArtString(settings, finalCharacterMap) :
                             string.Empty;
@@ -317,7 +296,7 @@ namespace AsciiPhoto
                             sw.WriteLine(consoleContent);
                             sw.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{counter}/{loadedBitmaps.Count}] Processed '{loadedBitmap.Path}' ({resultsObtainedMs:N0}ms)");
                             sw.WriteLine(fileProcessedConsoleMessage);
-                            sw.WriteLine(result);
+                            sw.WriteLine(resultForFile);
                             sw.WriteLine();
                         }
 
@@ -334,7 +313,7 @@ namespace AsciiPhoto
                             Console.Clear();
                         }
 
-                        Console.WriteLine(result);
+                        WriteToConsole(settings, finalCharacterMap);
                     }
 
                     stopWatch.Stop();
@@ -353,7 +332,7 @@ namespace AsciiPhoto
             foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
             {
                 Letter createdLetter = AsciiHelper.CreateLetterFromFontData(settings, simpleLetter.Key);
-                float brightnessRounded = (float)Math.Round((decimal)createdLetter.Brightness, 2);
+                float brightnessRounded = (float)Math.Round((decimal)createdLetter.CharacterBrightnessBasedOnPixels, 2);
 
                 if (!result.ContainsValue(brightnessRounded))
                 {
@@ -379,7 +358,46 @@ namespace AsciiPhoto
         {
             foreach (Letter letter in alphabet)
             {
-                Console.WriteLine($"{letter.Character}: {letter.Brightness}");
+                Console.WriteLine($"{letter.Character}: {letter.CharacterBrightnessBasedOnPixels}");
+            }
+        }
+
+        private static void WriteToConsole(ConverterSettings settings, Letter[,] letterMatrixToWriteToConsole)
+        {
+            ConsoleColor origTextColor = Console.ForegroundColor;
+
+            if (settings.Verbose)
+            {
+                Console.ForegroundColor = origTextColor;
+                Console.WriteLine($" {AsciiHelper.DecorStart}");
+            }
+
+            for (int y = 0; y < letterMatrixToWriteToConsole.GetLength(1); y++)
+            {
+                if (settings.Verbose)
+                {
+                    Console.ForegroundColor = origTextColor;
+                    Console.Write(" │ ");
+                }
+
+                for (int x = 0; x < letterMatrixToWriteToConsole.GetLength(0); x++)
+                {
+                    Console.ForegroundColor = letterMatrixToWriteToConsole[x, y].TextColor ?? origTextColor;
+                    Console.Write(letterMatrixToWriteToConsole[x, y].Character);
+                }
+
+                if (settings.Verbose)
+                {
+                    Console.ForegroundColor = origTextColor;
+                    Console.Write(" │");
+                }
+
+                Console.WriteLine();
+            }
+
+            if (settings.Verbose)
+            {
+                Console.WriteLine(AsciiHelper.DecorEnd.Indent(letterMatrixToWriteToConsole.GetLength(0) - AsciiHelper.DecorEnd.Length + 5, ' '));
             }
         }
     }

@@ -10,6 +10,7 @@ namespace AsciiPhoto.Entities
         public LetterMatch(decimal weightOffset, decimal weightTotalPixelNumber, Letter matchedLetter, int nrMatchingBlackPixels)
         {
             MatchedLetter = matchedLetter;
+
             int totalOffset = Math.Abs(MatchedLetter.HorizontalOffset) + Math.Abs(MatchedLetter.VerticalOffset);
             Score = CalculateMatchScore(weightOffset, weightTotalPixelNumber, matchedLetter, nrMatchingBlackPixels, totalOffset);
             ////ScoreComposition = $"{nrMatchingBlackPixels} - (({matchedLetter.PixelCountInOriginal} - {nrMatchingBlackPixels}) * {weightTotalPixelNumber}) - ({totalOffset} * {weightOffset}) = {Score}";

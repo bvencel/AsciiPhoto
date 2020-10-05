@@ -1,5 +1,5 @@
 ﻿--path
-d:\Documents\Dropbox\Projects\AsciiPhoto\DormRoom\Simplistic.png
+D:\Work\Personal\AsciiPhoto GitHub\Test images\Buildings\new_pngfuel.com(19).png
 --print-font-matrices
 false
 --print-results-asap
@@ -9,7 +9,7 @@ false
 --ratio
 60
 --chars-in-row
-60
+80
 --match-brightness
 false
 --verbose
@@ -19,14 +19,18 @@ false
 --return-to-start
 true
 --delay
-500
+100
 --loop-nr
-2200
+1
 --source
 0
 --inverse
-false
+true
 --brightness-offset
 0.2
 --refresh-sources
 true
+--output-file
+D:\output.txt
+--min-pixel-darkness
+0.70

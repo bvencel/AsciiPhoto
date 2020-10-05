@@ -31,6 +31,27 @@ namespace AsciiPhoto.Helpers
             return true;
         }
 
+        public static bool AllIsZero(decimal[,] matrix)
+        {
+            if (matrix is null)
+            {
+                return true;
+            }
+
+            for (int y = 0; y < matrix.GetLength(1); y++)
+            {
+                for (int x = 0; x < matrix.GetLength(0); x++)
+                {
+                    if (matrix[x, y] > 0m)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public static T[,] ExtractSubMatrix<T>(T[,] matrix, int colStart, int colEnd, int rowStart, int rowEnd)
         {
             if (matrix is null)
