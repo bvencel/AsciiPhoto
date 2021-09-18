@@ -243,17 +243,17 @@ namespace AsciiPhoto
 
                     if (settings.NrCharactersInARow > 0 && settings.MatchBrightness)
                     {
-                        //fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
+                        ////fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
 
-                        //if (settings.Verbose)
-                        //{
-                        //    Console.WriteLine(fileProcessedConsoleMessage);
-                        //}
+                        ////if (settings.Verbose)
+                        ////{
+                        ////    Console.WriteLine(fileProcessedConsoleMessage);
+                        ////}
 
                         //// ************************************
                         //// Generate the art based on brightness
                         //// ************************************
-                        //finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
+                        ////finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
                     }
                     else
                     {
