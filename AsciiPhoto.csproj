@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Biró Vencel (bvencel@gmail.com)</Authors>
     <Company>Biró Vencel</Company>
     <Copyright>Biró Vencel</Copyright>
