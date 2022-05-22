@@ -10,23 +10,33 @@ namespace AsciiPhoto.Helpers
 {
     internal static class AsciiHelper
     {
+        /// <summary>
+        /// The closing part of the decor around the generated text result.
+        /// </summary>
         public const string DecorEnd = "∙────────────┘";
 
+        /// <summary>
+        /// The opening part of the decor around the generated text result.
+        /// </summary>
         public const string DecorStart = "┌────────────∙";
 
+        /// <summary>
+        /// This alphabet is fixed width, even when varibale-width font is used.
+        /// This makes the result usable in environments, like instant messaging.
+        /// </summary>
         public const string FixedWidthAlphabet = "OUVXY░▒│╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌▌▐▀▄█";
 
         public static Letter CreateLetterFromFontData(ConverterSettings settings, string simpleLetter)
         {
             bool[,] pixelMap = GetPixelMapFromFontData(settings, simpleLetter);
-            Letter createdLetter = new Letter(simpleLetter, pixelMap, 0, 0);
+            Letter createdLetter = new(simpleLetter, pixelMap, 0, 0);
 
             return createdLetter;
         }
 
         public static List<Letter> GenerateAlphabetWithMap(ConverterSettings settings)
         {
-            List<Letter> letters = new List<Letter>();
+            List<Letter> letters = new ();
 
             int counter = 0;
 
@@ -64,7 +74,7 @@ namespace AsciiPhoto.Helpers
                             int offsetRow = y;
 
                             bool[,] shiftedMatrix = ArrayHelper.ShiftMatrix(createdLetter.PixelMap, offsetCol, offsetRow);
-                            Letter letterVariant = new Letter(createdLetter.Character, shiftedMatrix, offsetCol, offsetRow, createdLetter.PixelCountInOriginal);
+                            Letter letterVariant = new(createdLetter.Character, shiftedMatrix, offsetCol, offsetRow, createdLetter.PixelCountInOriginal);
 
                             letters.Add(letterVariant);
                         }
@@ -79,7 +89,7 @@ namespace AsciiPhoto.Helpers
 
         public static string GenerateAsciiArtString(ConverterSettings settings, Letter[,] characterMatrix)
         {
-            StringBuilder result = new StringBuilder();
+            StringBuilder result = new();
 
             if (settings.Verbose)
             {
@@ -258,10 +268,6 @@ namespace AsciiPhoto.Helpers
         /// Overlays the letter over the image fragment and counts the matches.
         /// Uses flattened matrix so this method only needs one cycle.
         /// </summary>
-        /// <param name="settings"></param>
-        /// <param name="subMap"></param>
-        /// <param name="letter"></param>
-        /// <returns></returns>
         private static LetterMatch CalculateMatchForLetterUsingFlatArray(ConverterSettings settings, decimal[] subMap, Letter letter)
         {
             int nrMatchingBlackPixels = 0;
@@ -298,7 +304,7 @@ namespace AsciiPhoto.Helpers
             Letter resultLetter = (Letter)letter.Clone();
             resultLetter.TextColor = nrMatchingGrayPixels > nrMatchingBlackPixels ? (ConsoleColor?)ConsoleColor.DarkGray : null;
 
-            LetterMatch result = new LetterMatch(
+            LetterMatch result = new(
                 settings.WeightOffset,
                 settings.WeightTotalPixelNumber,
                 resultLetter,
@@ -311,7 +317,7 @@ namespace AsciiPhoto.Helpers
         {
 #pragma warning disable CS0162 // Unreachable code detected
             // Charcode/Matches/Nr true items (more "true"s, the worse)
-            List<LetterMatch> matchingLetters = new List<LetterMatch>();
+            List<LetterMatch> matchingLetters = new();
             decimal[] flattenedSubBoolMap = Letter.FlattenMatrix(subBoolMap);
 
             foreach (Letter letter in alphabet)
@@ -348,7 +354,6 @@ namespace AsciiPhoto.Helpers
         /// <param name="settings"></param>
         /// <param name="brightness"></param>
         /// <param name="alphabet"></param>
-        /// <returns></returns>
         private static Letter MapBrightnessToAscii(ConverterSettings settings, float brightness, Dictionary<Letter, float> alphabet)
         {
             brightness += settings.BrightnessOffset;
@@ -384,14 +389,6 @@ namespace AsciiPhoto.Helpers
         /// <summary>
         /// Looks for match on a partial rectangle and decides the character.
         /// </summary>
-        /// <param name="settings"></param>
-        /// <param name="imageMatrix"></param>
-        /// <param name="alphabet"></param>
-        /// <param name="characterSize"></param>
-        /// <param name="col"></param>
-        /// <param name="row"></param>
-        /// <param name="textColor"></param>
-        /// <returns></returns>
         private static Letter MapLetterOntoPieceOfImage(ConverterSettings settings, decimal[,] imageMatrix, List<Letter> alphabet, Size characterSize, int col, int row)
         {
             decimal[,] subMatrix = ArrayHelper.ExtractSubMatrix(

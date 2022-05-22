@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace AsciiPhoto
+namespace AsciiPhoto.Helpers
 {
     /// <summary>
     /// Reads a data source line by line. The source can be a file, a stream,
@@ -16,20 +16,22 @@ namespace AsciiPhoto
         /// <summary>
         /// Means of creating a TextReader to read from.
         /// </summary>
-        readonly Func<TextReader> dataSource;
+        private readonly Func<TextReader> dataSource;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LineReader"/> class.
         /// Creates a LineReader from a stream source. The delegate is only
         /// called when the enumerator is fetched. UTF-8 is used to decode
         /// the stream into text.
         /// </summary>
-        /// <param name="streamSource">Data source</param>
+        /// <param name="streamSource">Data source.</param>
         public LineReader(Func<Stream> streamSource)
             : this(streamSource, Encoding.UTF8)
         {
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LineReader"/> class.
         /// Creates a LineReader from a stream source. The delegate is only
         /// called when the enumerator is fetched.
         /// </summary>
@@ -42,6 +44,7 @@ namespace AsciiPhoto
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LineReader"/> class.
         /// Creates a LineReader from a filename. The file is only opened
         /// (or even checked for existence) when the enumerator is fetched.
         /// UTF8 is used to decode the file into text.
@@ -53,6 +56,7 @@ namespace AsciiPhoto
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LineReader"/> class.
         /// Creates a LineReader from a filename. The file is only opened
         /// (or even checked for existence) when the enumerator is fetched.
         /// </summary>
@@ -65,6 +69,7 @@ namespace AsciiPhoto
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LineReader"/> class.
         /// Creates a LineReader from a TextReader source. The delegate
         /// is only called when the enumerator is fetched
         /// </summary>

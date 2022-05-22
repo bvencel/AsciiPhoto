@@ -104,66 +104,66 @@ namespace AsciiPhoto
 
             AdjustSettings(settings);
 
-            //Console.WriteLine(@"        ,                              ");
-            //Console.WriteLine(@"       ▐Γ ∙                            ");
-            //Console.WriteLine(@"       `█ ▐▌                           ");
-            //Console.WriteLine(@"       ■▀ ▐'                           ");
-            //Console.WriteLine(@"      `▐ ▌                             ");
-            //Console.WriteLine(@"     ▐█▀▀▀▀▀█   ,▄█▄,                  ");
-            //Console.WriteLine(@"      ▀▐█ █▌▀  ▄█▀ '█                  ");
-            //Console.WriteLine(@"       ▐█ █▌ ■█▀     ▀▄                ");
-            //Console.WriteLine(@"       ▐█ █▄█▀'       ▀█               ");
-            //Console.WriteLine(@"       ▐█_█▀'  ▄▀█▀▄   `█,             ");
-            //Console.WriteLine(@"       ▐█▀'   ▐█▄█▄▐█   `█             ");
-            //Console.WriteLine(@"     ,▄▀      ▐█ ▌ ▐Γ    `█,           ");
-            //Console.WriteLine(@"    ▄▀'       `▀▀▀▀°      `█,          ");
-            //Console.WriteLine(@"  ■█▄▄▄▄▄▄▄▄▄▄▄___________ `█■         ");
-            //Console.WriteLine(@"  `°T°T█`  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀         ");
-            //Console.WriteLine(@"       █▌       ▐█▀▀█▀▀█▌▐█            ");
-            //Console.WriteLine(@"       █▌       ▐▌  █Γ █▌▐█            ");
-            //Console.WriteLine(@"       █▌ ▄▄▄_¬ ▐▌▀▀█▀▀█Γ▐█  _  ▄▄  ■▄ ");
-            //Console.WriteLine(@"       █▌ █▌  █ █▌ ▐█  █ ▐█_▄█▌▐▀█Γ▐██ ");
-            //Console.WriteLine(@"     ▄▄█▌ █▌ _█ ▀▀▀▀▀▀▀▀▀▐███▐██▌▐██▌█ ");
-            //Console.WriteLine(@"   ▐█▀▐█▌ █Γ°▐█          ▐███▐█▐▌▐_█∩█ ");
-            //Console.WriteLine(@"▄▄■█_███▌_█__▐█__________██▄█▐██▌▐▄█▐▌ ");
-            //Console.WriteLine(@"``````▀▀▀█▀▀▀▌▀▀▀▀▀▀▀▀▀▀▀▀''''''''''   ");
-            //Console.WriteLine(@"          ▌  ▐▌                        ");
-            //Console.WriteLine(@"          ▌   █,                       ");
-            //Console.WriteLine(@"          █    ▀▄▄_                    ");
-            //Console.WriteLine(@"          `▀■∙+⌐+_▀▀▀▄__               ");
-            //Console.WriteLine(@"            `▀▄▄_∙∙╜∙-═▀▀▄_            ");
-            //Console.WriteLine(@"               `*▀▀▄_`°___█▄,          ");
-            //Console.WriteLine(@"                    ▀▄*═⌐╕⌐═█,         ");
-            //Console.WriteLine(@"                     `▌,__═⌐∙█         ");
-            //Console.WriteLine(@"                      █└──∙  ▐         ");
-            //Console.WriteLine(@"                     √▌ ___  ▐▌        ");
-            //Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
-            //Console.WriteLine(@"∙                                     ║");
-            //Console.WriteLine(@"║  CONGRATULATIONS ON SELLING         ∙");
-            //Console.WriteLine(@"∙  the▐█                              ║");
-            //Console.WriteLine(@"║     ▐█▄▄▄▄  ▄▄▄▄  ▄▄▄▄▄▄▄▄■  ▄▀▀▄   ∙");
-            //Console.WriteLine(@"∙     ▐█  ▐█ █▌  ██ █▌ ▐█  ██ ██▄▄█▌  ║");
-            //Console.WriteLine(@"║     ▐█  ▐█ ██__██ █▌ ▐█  ▐█ ██▄__   ∙");
-            //Console.WriteLine(@"∙      ▀   ▀   ▀▀▀  ▀  └▀   ▀   ▀▀▀   ║");
-            //Console.WriteLine(@"║                                     ∙");
-            //Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
-            //Console.WriteLine(@"               ▐▌,=══╖ ═¬_U▌           ");
-            //Console.WriteLine(@"              √▌ /   |/  /▐▌           ");
-            //Console.WriteLine(@"              █  ∙═══ ──═ ▐            ");
-            //Console.WriteLine(@"             ▐▌   -~─══Γ  █            ");
-            //Console.WriteLine(@"             ▐   |____/   ▌            ");
-            //Console.WriteLine(@"             █ =╛⌐═∙ ,═══ █            ");
-            //Console.WriteLine(@"             █ `∙¬__-∙__/_▐▌           ");
-            //Console.WriteLine(@"             ▐ (``* ∙ ╒∙* \▀▄          ");
-            //Console.WriteLine(@"             `█ `¬══___'∙,∙ '▀▄_       ");
-            //Console.WriteLine(@"              `▀, (   `)  _-⌐*'|▀▄     ");
-            //Console.WriteLine(@"                ▀▄,∙═_∙,∙╕|____╛ `▀■   ");
-            //Console.WriteLine(@"                 `▀▄, (   \`° ╥──¬ ▐▌  ");
-            //Console.WriteLine(@"                   `▀▄ \ ,∙∙  └═══┘ █  ");
-            //Console.WriteLine(@"                     ╙▌ '           ▐▌ ");
-            //Console.WriteLine(@"                      █              █ ");
-            //Console.WriteLine(@"                      █              █ ");
-            //Console.WriteLine(@"                      ▀              ▀ ");
+            ///// Console.WriteLine(@"        ,                              ");
+            ///// Console.WriteLine(@"       ▐Γ ∙                            ");
+            ///// Console.WriteLine(@"       `█ ▐▌                           ");
+            ///// Console.WriteLine(@"       ■▀ ▐'                           ");
+            ///// Console.WriteLine(@"      `▐ ▌                             ");
+            ///// Console.WriteLine(@"     ▐█▀▀▀▀▀█   ,▄█▄,                  ");
+            ///// Console.WriteLine(@"      ▀▐█ █▌▀  ▄█▀ '█                  ");
+            ///// Console.WriteLine(@"       ▐█ █▌ ■█▀     ▀▄                ");
+            ///// Console.WriteLine(@"       ▐█ █▄█▀'       ▀█               ");
+            ///// Console.WriteLine(@"       ▐█_█▀'  ▄▀█▀▄   `█,             ");
+            ///// Console.WriteLine(@"       ▐█▀'   ▐█▄█▄▐█   `█             ");
+            ///// Console.WriteLine(@"     ,▄▀      ▐█ ▌ ▐Γ    `█,           ");
+            ///// Console.WriteLine(@"    ▄▀'       `▀▀▀▀°      `█,          ");
+            ///// Console.WriteLine(@"  ■█▄▄▄▄▄▄▄▄▄▄▄___________ `█■         ");
+            ///// Console.WriteLine(@"  `°T°T█`  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀         ");
+            ///// Console.WriteLine(@"       █▌       ▐█▀▀█▀▀█▌▐█            ");
+            ///// Console.WriteLine(@"       █▌       ▐▌  █Γ █▌▐█            ");
+            ///// Console.WriteLine(@"       █▌ ▄▄▄_¬ ▐▌▀▀█▀▀█Γ▐█  _  ▄▄  ■▄ ");
+            ///// Console.WriteLine(@"       █▌ █▌  █ █▌ ▐█  █ ▐█_▄█▌▐▀█Γ▐██ ");
+            ///// Console.WriteLine(@"     ▄▄█▌ █▌ _█ ▀▀▀▀▀▀▀▀▀▐███▐██▌▐██▌█ ");
+            ///// Console.WriteLine(@"   ▐█▀▐█▌ █Γ°▐█          ▐███▐█▐▌▐_█∩█ ");
+            ///// Console.WriteLine(@"▄▄■█_███▌_█__▐█__________██▄█▐██▌▐▄█▐▌ ");
+            ///// Console.WriteLine(@"``````▀▀▀█▀▀▀▌▀▀▀▀▀▀▀▀▀▀▀▀''''''''''   ");
+            ///// Console.WriteLine(@"          ▌  ▐▌                        ");
+            ///// Console.WriteLine(@"          ▌   █,                       ");
+            ///// Console.WriteLine(@"          █    ▀▄▄_                    ");
+            ///// Console.WriteLine(@"          `▀■∙+⌐+_▀▀▀▄__               ");
+            ///// Console.WriteLine(@"            `▀▄▄_∙∙╜∙-═▀▀▄_            ");
+            ///// Console.WriteLine(@"               `*▀▀▄_`°___█▄,          ");
+            ///// Console.WriteLine(@"                    ▀▄*═⌐╕⌐═█,         ");
+            ///// Console.WriteLine(@"                     `▌,__═⌐∙█         ");
+            ///// Console.WriteLine(@"                      █└──∙  ▐         ");
+            ///// Console.WriteLine(@"                     √▌ ___  ▐▌        ");
+            ///// Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
+            ///// Console.WriteLine(@"∙                                     ║");
+            ///// Console.WriteLine(@"║  CONGRATULATIONS ON SELLING         ∙");
+            ///// Console.WriteLine(@"∙  the▐█                              ║");
+            ///// Console.WriteLine(@"║     ▐█▄▄▄▄  ▄▄▄▄  ▄▄▄▄▄▄▄▄■  ▄▀▀▄   ∙");
+            ///// Console.WriteLine(@"∙     ▐█  ▐█ █▌  ██ █▌ ▐█  ██ ██▄▄█▌  ║");
+            ///// Console.WriteLine(@"║     ▐█  ▐█ ██__██ █▌ ▐█  ▐█ ██▄__   ∙");
+            ///// Console.WriteLine(@"∙      ▀   ▀   ▀▀▀  ▀  └▀   ▀   ▀▀▀   ║");
+            ///// Console.WriteLine(@"║                                     ∙");
+            ///// Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
+            ///// Console.WriteLine(@"               ▐▌,=══╖ ═¬_U▌           ");
+            ///// Console.WriteLine(@"              √▌ /   |/  /▐▌           ");
+            ///// Console.WriteLine(@"              █  ∙═══ ──═ ▐            ");
+            ///// Console.WriteLine(@"             ▐▌   -~─══Γ  █            ");
+            ///// Console.WriteLine(@"             ▐   |____/   ▌            ");
+            ///// Console.WriteLine(@"             █ =╛⌐═∙ ,═══ █            ");
+            ///// Console.WriteLine(@"             █ `∙¬__-∙__/_▐▌           ");
+            ///// Console.WriteLine(@"             ▐ (``* ∙ ╒∙* \▀▄          ");
+            ///// Console.WriteLine(@"             `█ `¬══___'∙,∙ '▀▄_       ");
+            ///// Console.WriteLine(@"              `▀, (   `)  _-⌐*'|▀▄     ");
+            ///// Console.WriteLine(@"                ▀▄,∙═_∙,∙╕|____╛ `▀■   ");
+            ///// Console.WriteLine(@"                 `▀▄, (   \`° ╥──¬ ▐▌  ");
+            ///// Console.WriteLine(@"                   `▀▄ \ ,∙∙  └═══┘ █  ");
+            ///// Console.WriteLine(@"                     ╙▌ '           ▐▌ ");
+            ///// Console.WriteLine(@"                      █              █ ");
+            ///// Console.WriteLine(@"                      █              █ ");
+            ///// Console.WriteLine(@"                      ▀              ▀ ");
 
             CreateArt(settings);
         }
@@ -197,7 +197,7 @@ namespace AsciiPhoto
                 return;
             }
 
-            StringBuilder consoleContent = new StringBuilder();
+            StringBuilder consoleContent = new ();
 
             ////consoleContent.AppendLine($"Using settings {settings}");
 
@@ -222,7 +222,7 @@ namespace AsciiPhoto
             consoleContent.AppendLine($"Loaded {alphabet.Count} fonts ({stopWatch.Elapsed.TotalMilliseconds:N0}ms)");
 
             stopWatch.Restart();
-            List<BitmapWithMetadata> loadedBitmaps = new List<BitmapWithMetadata>();
+            List<BitmapWithMetadata> loadedBitmaps = new ();
 
             // Load bitmaps
             if (settings.Source != InputSources.Screen)
@@ -354,11 +354,8 @@ namespace AsciiPhoto
                     if (!string.IsNullOrWhiteSpace(settings.OutputFile))
                     {
                         // Write to file
-                        using (StreamWriter sw = new StreamWriter(settings.OutputFile, !firstRun))
+                        using (StreamWriter sw = new (settings.OutputFile, !firstRun))
                         {
-                            //sw.WriteLine(consoleContent);
-                            //sw.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{counter}/{loadedBitmaps.Count}] Processed '{loadedBitmap.Path}' ({resultsObtainedMs:N0}ms)");
-                            //sw.WriteLine(fileProcessedConsoleMessage);
                             string hidratedText = HidrateWithHtml(resultForFile);
                             sw.WriteLine(hidratedText);
                             sw.WriteLine();
@@ -391,7 +388,7 @@ namespace AsciiPhoto
 
         private static Dictionary<string, float> GetAlphabetForBrightness(ConverterSettings settings)
         {
-            Dictionary<string, float> result = new Dictionary<string, float>();
+            Dictionary<string, float> result = new ();
 
             foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
             {
@@ -420,7 +417,7 @@ namespace AsciiPhoto
 
         private static Dictionary<Letter, float> GetAlphabetForBrightness2(ConverterSettings settings)
         {
-            Dictionary<Letter, float> result = new Dictionary<Letter, float>();
+            Dictionary<Letter, float> result = new ();
 
             foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
             {
@@ -451,7 +448,7 @@ namespace AsciiPhoto
 
         private static string HidrateWithHtml(string text)
         {
-            StringBuilder result = new StringBuilder();
+            StringBuilder result = new ();
             result.AppendLine("<html><head><style>body{font-size: 10px; font-family: Lucida Console} div{width:12px;display: inline-block}</style></head><body>");
 
             result.AppendLine($"<pre>{text}</pre>");
