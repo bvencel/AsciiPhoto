@@ -181,7 +181,7 @@ namespace AsciiPhoto
             consoleContent.AppendLine($"Loaded {alphabet.Count} fonts ({stopWatch.Elapsed.TotalMilliseconds:N0}ms)");
 
             stopWatch.Restart();
-            List<BitmapWithMetadata> loadedBitmaps = new();
+            List<BitmapWithMetadata>? loadedBitmaps = new();
 
             // Load bitmaps
             if (settings.Source != InputSources.Screen)
