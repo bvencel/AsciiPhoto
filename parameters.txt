@@ -1,7 +1,7 @@
 ﻿--path
-D:\Work\Personal\AsciiPhoto GitHub\Test images\Buildings\new_pngfuel.com(19).png
+d:\Documents\OneDrive\Pictures\Test images - Selected
 --print-font-matrices
-false
+true
 --print-results-asap
 false
 --pixels-between-rows
@@ -9,7 +9,7 @@ false
 --ratio
 60
 --chars-in-row
-80
+230
 --match-brightness
 false
 --verbose

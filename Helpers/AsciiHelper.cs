@@ -1,4 +1,5 @@
 ﻿using AsciiPhoto.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,7 +17,7 @@ namespace AsciiPhoto.Helpers
         public static Letter CreateLetterFromFontData(ConverterSettings settings, string simpleLetter)
         {
             bool[,] pixelMap = GetPixelMapFromFontData(settings, simpleLetter);
-            Letter createdLetter = new Letter(simpleLetter, pixelMap, 0, 0);
+            Letter createdLetter = new (simpleLetter, pixelMap, 0, 0);
 
             return createdLetter;
         }
