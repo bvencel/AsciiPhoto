@@ -7,12 +7,12 @@ namespace AsciiPhoto.Entities
     /// </summary>
     public class BitmapWithMetadata
     {
-        public Bitmap LoadedBitmap { get; set; }
+        public Bitmap? LoadedBitmap { get; set; }
 
         public int LoadedHeight { get; set; }
 
         public int LoadedWidth { get; set; }
 
-        public string Path { get; set; }
+        public string Path { get; set; } = string.Empty;
     }
 }

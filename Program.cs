@@ -239,8 +239,26 @@ namespace AsciiPhoto
                     }
                 }
 
+                if (loadedBitmaps == null || loadedBitmaps.Count == 0)
+                {
+                    Console.WriteLine("Could not load any bitmaps");
+                    return;
+                }
+
                 foreach (BitmapWithMetadata loadedBitmap in loadedBitmaps)
                 {
+                    if (loadedBitmap is null)
+                    {
+                        Console.WriteLine("Skipped null bitmap");
+                        continue;
+                    }
+
+                    if (loadedBitmap.LoadedBitmap is null)
+                    {
+                        Console.WriteLine("Skipped bitmap with null LoadedBitmap");
+                        continue;
+                    }
+
                     counter++;
 
                     if (settings.ReturnToStart)

@@ -1,5 +1,6 @@
 ﻿using AsciiPhoto.Entities;
 using AsciiPhoto.Enums;
+
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -37,14 +38,14 @@ namespace AsciiPhoto.Helpers
                 return null;
             }
 
-            List<BitmapWithMetadata> files = new List<BitmapWithMetadata>();
+            List<BitmapWithMetadata> files = new();
 
             // Other sources than screen
             if (IsFile(settings.Path))
             {
                 FileInfo fileInfo = new FileInfo(settings.Path);
 
-                using Bitmap loadedBitmap = new Bitmap(fileInfo.FullName);
+                using Bitmap loadedBitmap = new(fileInfo.FullName);
                 Bitmap resizedBitmap = ImageHelper.ResizeLoadedBitmap(settings, out _, loadedBitmap);
 
                 files.Add(new BitmapWithMetadata()
@@ -62,9 +63,9 @@ namespace AsciiPhoto.Helpers
             }
             else
             {
-                DirectoryInfo filesOfFolder = new DirectoryInfo(settings.Path);
+                DirectoryInfo filesOfFolder = new(settings.Path);
 
-                List<FileInfo> fileList = new List<FileInfo>();
+                List<FileInfo> fileList = new();
                 fileList.AddRange(filesOfFolder.GetFiles("*.jpg", SearchOption.AllDirectories));
                 fileList.AddRange(filesOfFolder.GetFiles("*.jpeg", SearchOption.AllDirectories));
                 fileList.AddRange(filesOfFolder.GetFiles("*.png", SearchOption.AllDirectories));
@@ -73,7 +74,7 @@ namespace AsciiPhoto.Helpers
 
                 foreach (FileInfo fileInfo in fileList)
                 {
-                    using Bitmap loadedBitmap = new Bitmap(fileInfo.FullName);
+                    using Bitmap loadedBitmap = new(fileInfo.FullName);
                     Bitmap resizedBitmap = ImageHelper.ResizeLoadedBitmap(settings, out _, loadedBitmap);
 
                     files.Add(new BitmapWithMetadata()
