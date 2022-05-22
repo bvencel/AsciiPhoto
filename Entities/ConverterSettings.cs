@@ -1,4 +1,5 @@
 ﻿using AsciiPhoto.Enums;
+
 using System;
 using System.IO;
 using System.Text;
@@ -78,7 +79,7 @@ namespace AsciiPhoto.Entities
 
             try
             {
-                using StreamReader srSettings = new StreamReader(fileName, Encoding.Unicode);
+                using StreamReader srSettings = new(fileName, Encoding.Unicode);
                 string jsonText = srSettings.ReadToEnd();
 
                 ConverterSettings settings = JsonSerializer.Deserialize<ConverterSettings>(jsonText);
@@ -102,7 +103,7 @@ namespace AsciiPhoto.Entities
 
             try
             {
-                using StreamWriter swSettings = new StreamWriter(fileName, false, Encoding.Unicode);
+                using StreamWriter swSettings = new(fileName, false, Encoding.Unicode);
                 swSettings.WriteLine(ToString());
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using AsciiPhoto.Entities;
+
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -19,8 +20,10 @@ namespace AsciiPhoto
 
         /// <summary>
         /// Gets a dictionary containing the alphabet characters and their pixel maps.
+        /// This is used to replace the default font with emojis.
+        /// Needed for a Fiverr job.
         /// </summary>
-        private static Dictionary<string, string> Map => new Dictionary<string, string>()
+        private static Dictionary<string, string> Map => new()
         {
             ["#"] = "🦓",
             ["'"] = "😀",

@@ -1,5 +1,5 @@
 ﻿--path
-d:\Documents\OneDrive - Fortech srl\Fbrd\fbrd-logo-reduced.png
+d:\Documents\OneDrive\Pictures\Test images - Selected\
 --print-font-matrices
 false
 --print-results-asap
@@ -9,7 +9,7 @@ false
 --ratio
 60
 --chars-in-row
-26
+230
 --match-brightness
 false
 --verbose
@@ -17,7 +17,7 @@ true
 --clear-screen
 false
 --return-to-start
-true
+false
 --delay
 0
 --loop-nr
@@ -35,4 +35,4 @@ D:\output.html
 --min-pixel-darkness
 0.70
 --alphabet
-fbrd
+ OUVXY░▒│╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌▌▐▀▄█

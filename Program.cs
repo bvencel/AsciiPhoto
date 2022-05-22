@@ -109,7 +109,11 @@ namespace AsciiPhoto
 
             AdjustSettings(settings);
 
-            CreateArt(settings);
+            Console.OutputEncoding = Encoding.Unicode;
+            string asciiTable = AsciiHelper.GetAsciiTableAsUnicode();
+            Console.WriteLine(asciiTable);
+
+            ////CreateArt(settings);
         }
 
         /// <summary>
@@ -160,6 +164,12 @@ namespace AsciiPhoto
 
             // Letters with bitmaps
             List<Letter> alphabet = AsciiHelper.GenerateAlphabetWithMap(settings);
+
+            if (alphabet.Count == 0)
+            {
+                consoleContent.AppendLine($"Could not find any font data for the defined alphaber '{settings.Alphabet}'");
+                return;
+            }
 
             // Letters for brightness
             Dictionary<Letter, float> alphabetForBrightness = GetAlphabetForBrightness2(settings);
@@ -307,7 +317,7 @@ namespace AsciiPhoto
                     if (!string.IsNullOrWhiteSpace(settings.OutputFile))
                     {
                         // Write to file
-                        using (StreamWriter sw = new(settings.OutputFile, !firstRun))
+                        using (StreamWriter sw = new(settings.OutputFile, !firstRun, Encoding.ASCII))
                         {
                             string hidratedText = HidrateWithHtml(resultForFile);
                             sw.WriteLine(hidratedText);
