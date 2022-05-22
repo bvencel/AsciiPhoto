@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace AsciiPhoto
@@ -12,7 +11,7 @@ namespace AsciiPhoto
         /// <summary>
         /// Lucida Console font dimensions at 14pt size
         /// </summary>
-        public static readonly Size CharacterSize = new (FontWidth, FontHeight);
+        public static readonly Size CharacterSize = new Size(FontWidth, FontHeight);
 
         private const int FontHeight = 14;
         private const int FontWidth = 8;
@@ -20,7 +19,7 @@ namespace AsciiPhoto
         /// <summary>
         /// Gets a dictionary containing the alphabet characters and their pixel maps.
         /// </summary>
-        private static Dictionary<string, string[]> Map => new ()
+        private static Dictionary<string, string[]> Map => new Dictionary<string, string[]>()
         {
             [" "] = new string[FontHeight]
             {
@@ -1673,11 +1672,11 @@ namespace AsciiPhoto
                 return Map;
             }
 
-            Dictionary<string, string[]> partialMap = new ();
+            Dictionary<string, string[]> partialMap = new Dictionary<string, string[]>();
 
             foreach (KeyValuePair<string, string[]> item in Map)
             {
-                if (limitedAlphabet.Contains(item.Key, StringComparison.Ordinal))
+                if (limitedAlphabet.Contains(item.Key, System.StringComparison.Ordinal))
                 {
                     partialMap.Add(item.Key, item.Value);
                 }

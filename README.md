@@ -59,4 +59,3 @@ Alternatively it can match brightness instead of contours. This works better for
 ```
 # ToDos
 * Try using [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering) on the photo before determining pixel brightness
-* Use the real color of the images
