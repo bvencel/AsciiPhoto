@@ -8,6 +8,9 @@ using System.Text;
 
 namespace AsciiPhoto.Helpers
 {
+    /// <summary>
+    /// Helper class responsible for ASCII operations.
+    /// </summary>
     internal static class AsciiHelper
     {
         /// <summary>
@@ -36,7 +39,7 @@ namespace AsciiPhoto.Helpers
 
         public static List<Letter> GenerateAlphabetWithMap(ConverterSettings settings)
         {
-            List<Letter> letters = new ();
+            List<Letter> letters = new();
 
             int counter = 0;
 
