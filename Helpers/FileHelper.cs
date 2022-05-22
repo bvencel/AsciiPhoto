@@ -26,7 +26,7 @@ namespace AsciiPhoto.Helpers
             }
         }
 
-        public static List<BitmapWithMetadata> LoadBitmapsOriginalSize(ConverterSettings settings, StringBuilder consoleContent)
+        public static List<BitmapWithMetadata>? LoadBitmapsOriginalSize(ConverterSettings settings, StringBuilder consoleContent)
         {
             if (settings is null)
             {
@@ -43,7 +43,7 @@ namespace AsciiPhoto.Helpers
             // Other sources than screen
             if (IsFile(settings.Path))
             {
-                FileInfo fileInfo = new FileInfo(settings.Path);
+                FileInfo fileInfo = new(settings.Path);
 
                 using Bitmap loadedBitmap = new(fileInfo.FullName);
                 Bitmap resizedBitmap = ImageHelper.ResizeLoadedBitmap(settings, out _, loadedBitmap);

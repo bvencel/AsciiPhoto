@@ -109,11 +109,7 @@ namespace AsciiPhoto
 
             AdjustSettings(settings);
 
-            Console.OutputEncoding = Encoding.Unicode;
-            string asciiTable = AsciiHelper.GetAsciiTableAsUnicode();
-            Console.WriteLine(asciiTable);
-
-            ////CreateArt(settings);
+            CreateArt(settings);
         }
 
         /// <summary>
@@ -335,10 +331,18 @@ namespace AsciiPhoto
                     if (!string.IsNullOrWhiteSpace(settings.OutputFile))
                     {
                         // Write to file
-                        using (StreamWriter sw = new(settings.OutputFile, !firstRun, Encoding.ASCII))
+                        using (StreamWriter sw = new(settings.OutputFile, !firstRun, Encoding.UTF8))
                         {
-                            string hidratedText = HidrateWithHtml(resultForFile);
-                            sw.WriteLine(hidratedText);
+                            if (settings.OutputFile.EndsWith(".htm") || settings.OutputFile.EndsWith(".html"))
+                            {
+                                string hidratedText = HidrateWithHtml(resultForFile);
+                                sw.WriteLine(hidratedText);
+                            }
+                            else
+                            {
+                                sw.WriteLine(AsciiHelper.ConverterFromUnicodeTo437(resultForFile));
+                            }
+
                             sw.WriteLine();
                         }
 

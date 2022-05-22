@@ -24,6 +24,11 @@ namespace AsciiPhoto.Helpers
         public const string DecorStart = "┌────────────∙";
 
         /// <summary>
+        /// The filled character simbolizing a pixel that is part of a letter.
+        /// </summary>
+        public const char FilledChar = '█';
+
+        /// <summary>
         /// This alphabet is fixed width, even when varibale-width font is used.
         /// This makes the result usable in environments, like instant messaging.
         /// </summary>
@@ -362,6 +367,34 @@ namespace AsciiPhoto.Helpers
             return resultCharacterMap;
         }
 
+        public static void GenerateFontData(ConverterSettings settings)
+        {
+            Console.OutputEncoding = Encoding.Unicode;
+            string asciiTable = AsciiHelper.GetAsciiTableAsUnicode();
+            Console.WriteLine(asciiTable);
+
+            Bitmap loadedBitmap = new("D:\\ExtendedAsciiCharacters 16-254.png");
+
+            int width = loadedBitmap.Width;
+            int startingPixel = 0;
+
+            // Iterate through the width of the bitmap every 8 pixels
+            while (startingPixel + 8 < width)
+            {
+                Bitmap smallPart = ImageHelper.GetPartOfBitmap(loadedBitmap, startingPixel, 0, 8, 14);
+
+                int charIndex = startingPixel / 8;
+
+                string letterMap = GenerateFontMatrix(smallPart, settings);
+
+                string oneCharacterFontData = GenerateOneCharacterFontData(letterMap, asciiTable[charIndex]);
+
+                Console.WriteLine(oneCharacterFontData);
+
+                startingPixel += 8;
+            }
+        }
+
         /// <summary>
         /// Gets the ASCII table.
         /// https://en.wikipedia.org/wiki/Code_page_437
@@ -515,35 +548,97 @@ namespace AsciiPhoto.Helpers
             return result;
         }
 
-        private static LetterMatch GetMatchedCharacterCodeFlat(ConverterSettings settings, decimal[,] subBoolMap, List<Letter> alphabet)
+        private static string GenerateFontMatrix(Bitmap image, ConverterSettings settings)
         {
-#pragma warning disable CS0162 // Unreachable code detected
+            StringBuilder result = new();
+            for (int y = 0; y < image.Height; y++)
+            {
+                if (y > 0)
+                {
+                    result.AppendLine();
+                }
+
+                for (int x = 0; x < image.Width; x++)
+                {
+                    Color colorAtPixel = image.GetPixel(x, y);
+
+                    if (!ImageHelper.ColorIsDarkEnough(settings, colorAtPixel))
+                    {
+                        result.Append(AsciiHelper.FilledChar);
+                    }
+                    else
+                    {
+                        result.Append(" ");
+                    }
+                }
+            }
+
+            return result.ToString();
+        }
+
+        private static string GenerateOneCharacterFontData(string letterMap, char character)
+        {
+            /*
+            [" "] = new string[FontHeight]
+            {
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+                "        ",
+            },
+ */
+            StringBuilder result = new($"[\"{character}\"] = new string[FontHeight]");
+            result.AppendLine("{");
+
+            foreach (string line in letterMap.Split(Environment.NewLine))
+            {
+                result.AppendLine($"    \"{line}\",");
+            }
+
+            result.AppendLine("},");
+            result.AppendLine();
+
+            return result.ToString();
+        }
+
+        private static LetterMatch? GetMatchedCharacterCodeFlat(ConverterSettings settings, decimal[,] subBoolMap, List<Letter> alphabet)
+        {
             // Charcode/Matches/Nr true items (more "true"s, the worse)
             List<LetterMatch> matchingLetters = new();
             decimal[] flattenedSubBoolMap = Letter.FlattenMatrix(subBoolMap);
 
             foreach (Letter letter in alphabet)
             {
-                LetterMatch matchForLetterVariant = CalculateMatchForLetterUsingFlatArray(settings, flattenedSubBoolMap, letter);
+                LetterMatch? matchForLetterVariant = CalculateMatchForLetterUsingFlatArray(settings, flattenedSubBoolMap, letter);
 
                 matchingLetters.Add(matchForLetterVariant);
             }
 
-            LetterMatch selectedBestMatch = SelectBestMatch(matchingLetters);
+            LetterMatch? selectedBestMatch = SelectBestMatch(matchingLetters);
 
             return selectedBestMatch;
-#pragma warning restore CS0162 // Unreachable code detected
         }
 
         private static bool[,] GetPixelMapFromFontData(ConverterSettings settings, string character)
         {
             bool[,] matrix = new bool[LucidaConsole.CharacterSize.Width, LucidaConsole.CharacterSize.Height];
+            Dictionary<string, string[]> filteredMap = LucidaConsole.GetFilteredMap(settings.Alphabet);
 
             for (int y = 0; y < LucidaConsole.CharacterSize.Height; y++)
             {
                 for (int x = 0; x < LucidaConsole.CharacterSize.Width; x++)
                 {
-                    matrix[x, y] = LucidaConsole.GetFilteredMap(settings.Alphabet)[character][y][x].Equals('█');
+                    matrix[x, y] = filteredMap[character][y][x].Equals(FilledChar);
                 }
             }
 
@@ -630,7 +725,6 @@ namespace AsciiPhoto.Helpers
                         {
                             if (matrix is bool[,])
                             {
-                                const string FilledChar = "█";
                                 const string EmptyChar = "·";
 
                                 Console.Write(Convert.ToBoolean(matrix[x, y]) ? FilledChar : EmptyChar);
@@ -653,7 +747,7 @@ namespace AsciiPhoto.Helpers
         /// </summary>
         /// <param name="allMatches">List of [Letter, matching number]</param>
         /// <returns>Best scoring match, containing the Letter, that will likely represent the bitmap.</returns>
-        private static LetterMatch SelectBestMatch(List<LetterMatch> allMatches)
+        private static LetterMatch? SelectBestMatch(List<LetterMatch> allMatches)
         {
             if (allMatches == null || allMatches.Count == 0)
             {
@@ -661,7 +755,7 @@ namespace AsciiPhoto.Helpers
             }
 
             decimal highestScore = 0;
-            LetterMatch highestScoring = null;
+            LetterMatch? highestScoring = null;
 
             foreach (LetterMatch match in allMatches)
             {

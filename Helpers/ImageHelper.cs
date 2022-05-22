@@ -38,6 +38,21 @@ namespace AsciiPhoto.Helpers
             return color.GetBrightness();
         }
 
+        public static Bitmap GetPartOfBitmap(Bitmap largeImage, int x, int y, int width, int height)
+        {
+            var bitmap = new Bitmap(width, height);
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    bitmap.SetPixel(i, j, largeImage.GetPixel(x + i, y + j));
+                }
+            }
+
+            return bitmap;
+        }
+
         /// <summary>
         /// Decides if a pixel should be treated as black, while processing an image.
         /// The images are treated as 1 bit, because everything is either black or white.
