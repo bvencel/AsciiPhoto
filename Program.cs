@@ -1,9 +1,11 @@
 ﻿using AsciiPhoto.Entities;
 using AsciiPhoto.Enums;
 using AsciiPhoto.Helpers;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -42,9 +44,12 @@ namespace AsciiPhoto
         /// Static sources should use false for this setting.
         /// </param>
         /// <param name="returnToStart">If true, the new result will start on position 0,0 of the console.</param>
-        /// <param name="screenNr">Not used at the moment.</param>
+        /// <param name="screenNr">Not used at the moment, but it was originally used when screen was recorded (source = 4).</param>
         /// <param name="source">The input method: Folder = 1, File = 2, Screen = 4</param>
-        /// <param name="verbose">If true, all information will be written in the console, otherwise only the results will be written. File content is not affected, that is always full.</param>
+        /// <param name="verbose">
+        /// If true, all information will be written in the console, otherwise only the results will be written.
+        /// File content is not affected, that is always fully verbose.
+        /// </param>
         /// <param name="verticalOffset"></param>
         /// <param name="weightOffsetPercent"></param>
         /// <param name="weightTotalPixelNumberPercent"></param>
@@ -74,7 +79,7 @@ namespace AsciiPhoto
             int weightOffsetPercent = 0,
             int weightTotalPixelNumberPercent = 100)
         {
-            ConverterSettings settings = new ConverterSettings()
+            ConverterSettings settings = new()
             {
                 Alphabet = alphabet,
                 BrightnessOffset = (float)brightnessOffset,
@@ -107,6 +112,11 @@ namespace AsciiPhoto
             CreateArt(settings);
         }
 
+        /// <summary>
+        /// Tweaks the setting values to make sure they are valid, after the ConverterSettings were constructed.
+        /// </summary>
+        /// <param name="settings">The originally constructed settings.</param>
+        [Pure]
         private static void AdjustSettings(ConverterSettings settings)
         {
             if (settings.Source == InputSources.NotSet)
@@ -122,6 +132,10 @@ namespace AsciiPhoto
             }
         }
 
+        /// <summary>
+        /// Creates the art, the result of the app.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
         private static void CreateArt(ConverterSettings settings)
         {
             if (settings is null)
@@ -136,7 +150,7 @@ namespace AsciiPhoto
                 return;
             }
 
-            StringBuilder consoleContent = new StringBuilder();
+            StringBuilder consoleContent = new();
 
             ////consoleContent.AppendLine($"Using settings {settings}");
 
@@ -147,8 +161,14 @@ namespace AsciiPhoto
             // Letters with bitmaps
             List<Letter> alphabet = AsciiHelper.GenerateAlphabetWithMap(settings);
 
+            if (alphabet.Count == 0)
+            {
+                consoleContent.AppendLine($"Could not find any font data for the defined alphaber '{settings.Alphabet}'");
+                return;
+            }
+
             // Letters for brightness
-            Dictionary<string, float> alphabetForBrightness = GetAlphabetForBrightness(settings);
+            Dictionary<Letter, float> alphabetForBrightness = GetAlphabetForBrightness2(settings);
 
             if (settings.PrintFontMatrices)
             {
@@ -161,7 +181,7 @@ namespace AsciiPhoto
             consoleContent.AppendLine($"Loaded {alphabet.Count} fonts ({stopWatch.Elapsed.TotalMilliseconds:N0}ms)");
 
             stopWatch.Restart();
-            List<BitmapWithMetadata> loadedBitmaps = new List<BitmapWithMetadata>();
+            List<BitmapWithMetadata>? loadedBitmaps = new();
 
             // Load bitmaps
             if (settings.Source != InputSources.Screen)
@@ -215,8 +235,26 @@ namespace AsciiPhoto
                     }
                 }
 
+                if (loadedBitmaps == null || loadedBitmaps.Count == 0)
+                {
+                    Console.WriteLine("Could not load any bitmaps");
+                    return;
+                }
+
                 foreach (BitmapWithMetadata loadedBitmap in loadedBitmaps)
                 {
+                    if (loadedBitmap is null)
+                    {
+                        Console.WriteLine("Skipped null bitmap");
+                        continue;
+                    }
+
+                    if (loadedBitmap.LoadedBitmap is null)
+                    {
+                        Console.WriteLine("Skipped bitmap with null LoadedBitmap");
+                        continue;
+                    }
+
                     counter++;
 
                     if (settings.ReturnToStart)
@@ -243,17 +281,17 @@ namespace AsciiPhoto
 
                     if (settings.NrCharactersInARow > 0 && settings.MatchBrightness)
                     {
-                        ////fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
+                        fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
 
-                        ////if (settings.Verbose)
-                        ////{
-                        ////    Console.WriteLine(fileProcessedConsoleMessage);
-                        ////}
+                        if (settings.Verbose)
+                        {
+                            Console.WriteLine(fileProcessedConsoleMessage);
+                        }
 
-                        //// ************************************
-                        //// Generate the art based on brightness
-                        //// ************************************
-                        ////finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
+                        // ************************************
+                        // Generate the art based on brightness
+                        // ************************************
+                        finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
                     }
                     else
                     {
@@ -283,20 +321,28 @@ namespace AsciiPhoto
                     stopWatch.Start();
 
                     // Final art as text
-                    string resultForFile =
+                    string resultForFileRaw =
                         (!string.IsNullOrWhiteSpace(settings.OutputFile) || !settings.PrintResultsAsap) ?
                             AsciiHelper.GenerateAsciiArtString(settings, finalCharacterMap) :
                             string.Empty;
 
+                    string resultForFile = resultForFileRaw;
+
                     if (!string.IsNullOrWhiteSpace(settings.OutputFile))
                     {
                         // Write to file
-                        using (StreamWriter sw = new StreamWriter(settings.OutputFile, !firstRun))
+                        using (StreamWriter sw = new(settings.OutputFile, !firstRun, Encoding.UTF8))
                         {
-                            sw.WriteLine(consoleContent);
-                            sw.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{counter}/{loadedBitmaps.Count}] Processed '{loadedBitmap.Path}' ({resultsObtainedMs:N0}ms)");
-                            sw.WriteLine(fileProcessedConsoleMessage);
-                            sw.WriteLine(resultForFile);
+                            if (settings.OutputFile.EndsWith(".htm") || settings.OutputFile.EndsWith(".html"))
+                            {
+                                string hidratedText = HidrateWithHtml(resultForFile);
+                                sw.WriteLine(hidratedText);
+                            }
+                            else
+                            {
+                                sw.WriteLine(AsciiHelper.ConverterFromUnicodeTo437(resultForFile));
+                            }
+
                             sw.WriteLine();
                         }
 
@@ -325,18 +371,20 @@ namespace AsciiPhoto
             }
         }
 
-        private static Dictionary<string, float> GetAlphabetForBrightness(ConverterSettings settings)
+        private static Dictionary<Letter, float> GetAlphabetForBrightness2(ConverterSettings settings)
         {
-            Dictionary<string, float> result = new Dictionary<string, float>();
+            Dictionary<Letter, float> result = new();
 
             foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
             {
                 Letter createdLetter = AsciiHelper.CreateLetterFromFontData(settings, simpleLetter.Key);
                 float brightnessRounded = (float)Math.Round((decimal)createdLetter.CharacterBrightnessBasedOnPixels, 2);
 
-                if (!result.ContainsValue(brightnessRounded))
+                bool brightnessExists = result.Where(r => r.Value == brightnessRounded).Any();
+
+                if (!brightnessExists)
                 {
-                    result.Add(createdLetter.Character, brightnessRounded);
+                    result.Add(createdLetter, brightnessRounded);
                 }
             }
 
@@ -354,6 +402,27 @@ namespace AsciiPhoto
             return result;
         }
 
+        private static string HidrateWithHtml(string text)
+        {
+            StringBuilder result = new();
+            result.AppendLine("<html><head><style>body{font-size: 10px; font-family: Lucida Console} div{width:12px;display: inline-block}</style></head><body>");
+
+            result.AppendLine($"<pre>{text}</pre>");
+
+            foreach (string line in new LineReader(() => new StringReader(text)))
+            {
+                foreach (char c in line)
+                {
+                    result.Append($"<div>{EmojiOverlay.ApplyOverlay(c.ToString().Replace(" ", "&nbsp;", StringComparison.OrdinalIgnoreCase))}</div>");
+                }
+
+                result.AppendLine("<br />");
+            }
+
+            result.AppendLine("</body></html>");
+            return result.ToString();
+        }
+
         private static void PrintAlphabetWithProperties(List<Letter> alphabet)
         {
             foreach (Letter letter in alphabet)
@@ -369,7 +438,7 @@ namespace AsciiPhoto
             if (settings.Verbose)
             {
                 Console.ForegroundColor = origTextColor;
-                Console.WriteLine($" {AsciiHelper.DecorStart}");
+                Console.WriteLine($"    {AsciiHelper.DecorStart}");
             }
 
             for (int y = 0; y < letterMatrixToWriteToConsole.GetLength(1); y++)
@@ -377,7 +446,9 @@ namespace AsciiPhoto
                 if (settings.Verbose)
                 {
                     Console.ForegroundColor = origTextColor;
-                    Console.Write(" │ ");
+
+                    // Indent, so there are 3 character wide numbers
+                    Console.Write($"{y + 1,3} │ ");
                 }
 
                 for (int x = 0; x < letterMatrixToWriteToConsole.GetLength(0); x++)
@@ -397,8 +468,69 @@ namespace AsciiPhoto
 
             if (settings.Verbose)
             {
-                Console.WriteLine(AsciiHelper.DecorEnd.Indent(letterMatrixToWriteToConsole.GetLength(0) - AsciiHelper.DecorEnd.Length + 5, ' '));
+                Console.WriteLine(AsciiHelper.DecorEnd.Indent(letterMatrixToWriteToConsole.GetLength(0) - AsciiHelper.DecorEnd.Length + 8, ' '));
             }
         }
     }
 }
+
+///// Console.WriteLine(@"        ,                              ");
+///// Console.WriteLine(@"       ▐Γ ∙                            ");
+///// Console.WriteLine(@"       `█ ▐▌                           ");
+///// Console.WriteLine(@"       ■▀ ▐'                           ");
+///// Console.WriteLine(@"      `▐ ▌                             ");
+///// Console.WriteLine(@"     ▐█▀▀▀▀▀█   ,▄█▄,                  ");
+///// Console.WriteLine(@"      ▀▐█ █▌▀  ▄█▀ '█                  ");
+///// Console.WriteLine(@"       ▐█ █▌ ■█▀     ▀▄                ");
+///// Console.WriteLine(@"       ▐█ █▄█▀'       ▀█               ");
+///// Console.WriteLine(@"       ▐█_█▀'  ▄▀█▀▄   `█,             ");
+///// Console.WriteLine(@"       ▐█▀'   ▐█▄█▄▐█   `█             ");
+///// Console.WriteLine(@"     ,▄▀      ▐█ ▌ ▐Γ    `█,           ");
+///// Console.WriteLine(@"    ▄▀'       `▀▀▀▀°      `█,          ");
+///// Console.WriteLine(@"  ■█▄▄▄▄▄▄▄▄▄▄▄___________ `█■         ");
+///// Console.WriteLine(@"  `°T°T█`  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀         ");
+///// Console.WriteLine(@"       █▌       ▐█▀▀█▀▀█▌▐█            ");
+///// Console.WriteLine(@"       █▌       ▐▌  █Γ █▌▐█            ");
+///// Console.WriteLine(@"       █▌ ▄▄▄_¬ ▐▌▀▀█▀▀█Γ▐█  _  ▄▄  ■▄ ");
+///// Console.WriteLine(@"       █▌ █▌  █ █▌ ▐█  █ ▐█_▄█▌▐▀█Γ▐██ ");
+///// Console.WriteLine(@"     ▄▄█▌ █▌ _█ ▀▀▀▀▀▀▀▀▀▐███▐██▌▐██▌█ ");
+///// Console.WriteLine(@"   ▐█▀▐█▌ █Γ°▐█          ▐███▐█▐▌▐_█∩█ ");
+///// Console.WriteLine(@"▄▄■█_███▌_█__▐█__________██▄█▐██▌▐▄█▐▌ ");
+///// Console.WriteLine(@"``````▀▀▀█▀▀▀▌▀▀▀▀▀▀▀▀▀▀▀▀''''''''''   ");
+///// Console.WriteLine(@"          ▌  ▐▌                        ");
+///// Console.WriteLine(@"          ▌   █,                       ");
+///// Console.WriteLine(@"          █    ▀▄▄_                    ");
+///// Console.WriteLine(@"          `▀■∙+⌐+_▀▀▀▄__               ");
+///// Console.WriteLine(@"            `▀▄▄_∙∙╜∙-═▀▀▄_            ");
+///// Console.WriteLine(@"               `*▀▀▄_`°___█▄,          ");
+///// Console.WriteLine(@"                    ▀▄*═⌐╕⌐═█,         ");
+///// Console.WriteLine(@"                     `▌,__═⌐∙█         ");
+///// Console.WriteLine(@"                      █└──∙  ▐         ");
+///// Console.WriteLine(@"                     √▌ ___  ▐▌        ");
+///// Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
+///// Console.WriteLine(@"∙                                     ║");
+///// Console.WriteLine(@"║  CONGRATULATIONS ON SELLING         ∙");
+///// Console.WriteLine(@"∙  the▐█                              ║");
+///// Console.WriteLine(@"║     ▐█▄▄▄▄  ▄▄▄▄  ▄▄▄▄▄▄▄▄■  ▄▀▀▄   ∙");
+///// Console.WriteLine(@"∙     ▐█  ▐█ █▌  ██ █▌ ▐█  ██ ██▄▄█▌  ║");
+///// Console.WriteLine(@"║     ▐█  ▐█ ██__██ █▌ ▐█  ▐█ ██▄__   ∙");
+///// Console.WriteLine(@"∙      ▀   ▀   ▀▀▀  ▀  └▀   ▀   ▀▀▀   ║");
+///// Console.WriteLine(@"║                                     ∙");
+///// Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
+///// Console.WriteLine(@"               ▐▌,=══╖ ═¬_U▌           ");
+///// Console.WriteLine(@"              √▌ /   |/  /▐▌           ");
+///// Console.WriteLine(@"              █  ∙═══ ──═ ▐            ");
+///// Console.WriteLine(@"             ▐▌   -~─══Γ  █            ");
+///// Console.WriteLine(@"             ▐   |____/   ▌            ");
+///// Console.WriteLine(@"             █ =╛⌐═∙ ,═══ █            ");
+///// Console.WriteLine(@"             █ `∙¬__-∙__/_▐▌           ");
+///// Console.WriteLine(@"             ▐ (``* ∙ ╒∙* \▀▄          ");
+///// Console.WriteLine(@"             `█ `¬══___'∙,∙ '▀▄_       ");
+///// Console.WriteLine(@"              `▀, (   `)  _-⌐*'|▀▄     ");
+///// Console.WriteLine(@"                ▀▄,∙═_∙,∙╕|____╛ `▀■   ");
+///// Console.WriteLine(@"                 `▀▄, (   \`° ╥──¬ ▐▌  ");
+///// Console.WriteLine(@"                   `▀▄ \ ,∙∙  └═══┘ █  ");
+///// Console.WriteLine(@"                     ╙▌ '           ▐▌ ");
+///// Console.WriteLine(@"                      █              █ ");
+///// Console.WriteLine(@"                      █              █ ");
+///// Console.WriteLine(@"                      ▀              ▀ ");

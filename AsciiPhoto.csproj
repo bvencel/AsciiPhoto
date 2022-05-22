@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Authors>Biró Vencel (bvencel@gmail.com)</Authors>
     <Company>Biró Vencel</Company>
     <Copyright>Biró Vencel</Copyright>
@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://github.com/bvencel/AsciiPhoto</PackageProjectUrl>
     <RepositoryUrl>https://github.com/bvencel/AsciiPhoto</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -34,7 +35,7 @@
     </PackageReference>
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20303.1" />
     <PackageReference Include="System.CommandLine.DragonFruit" Version="0.3.0-alpha.20303.1" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
