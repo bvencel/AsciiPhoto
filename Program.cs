@@ -104,6 +104,67 @@ namespace AsciiPhoto
 
             AdjustSettings(settings);
 
+            //Console.WriteLine(@"        ,                              ");
+            //Console.WriteLine(@"       ▐Γ ∙                            ");
+            //Console.WriteLine(@"       `█ ▐▌                           ");
+            //Console.WriteLine(@"       ■▀ ▐'                           ");
+            //Console.WriteLine(@"      `▐ ▌                             ");
+            //Console.WriteLine(@"     ▐█▀▀▀▀▀█   ,▄█▄,                  ");
+            //Console.WriteLine(@"      ▀▐█ █▌▀  ▄█▀ '█                  ");
+            //Console.WriteLine(@"       ▐█ █▌ ■█▀     ▀▄                ");
+            //Console.WriteLine(@"       ▐█ █▄█▀'       ▀█               ");
+            //Console.WriteLine(@"       ▐█_█▀'  ▄▀█▀▄   `█,             ");
+            //Console.WriteLine(@"       ▐█▀'   ▐█▄█▄▐█   `█             ");
+            //Console.WriteLine(@"     ,▄▀      ▐█ ▌ ▐Γ    `█,           ");
+            //Console.WriteLine(@"    ▄▀'       `▀▀▀▀°      `█,          ");
+            //Console.WriteLine(@"  ■█▄▄▄▄▄▄▄▄▄▄▄___________ `█■         ");
+            //Console.WriteLine(@"  `°T°T█`  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀         ");
+            //Console.WriteLine(@"       █▌       ▐█▀▀█▀▀█▌▐█            ");
+            //Console.WriteLine(@"       █▌       ▐▌  █Γ █▌▐█            ");
+            //Console.WriteLine(@"       █▌ ▄▄▄_¬ ▐▌▀▀█▀▀█Γ▐█  _  ▄▄  ■▄ ");
+            //Console.WriteLine(@"       █▌ █▌  █ █▌ ▐█  █ ▐█_▄█▌▐▀█Γ▐██ ");
+            //Console.WriteLine(@"     ▄▄█▌ █▌ _█ ▀▀▀▀▀▀▀▀▀▐███▐██▌▐██▌█ ");
+            //Console.WriteLine(@"   ▐█▀▐█▌ █Γ°▐█          ▐███▐█▐▌▐_█∩█ ");
+            //Console.WriteLine(@"▄▄■█_███▌_█__▐█__________██▄█▐██▌▐▄█▐▌ ");
+            //Console.WriteLine(@"``````▀▀▀█▀▀▀▌▀▀▀▀▀▀▀▀▀▀▀▀''''''''''   ");
+            //Console.WriteLine(@"          ▌  ▐▌                        ");
+            //Console.WriteLine(@"          ▌   █,                       ");
+            //Console.WriteLine(@"          █    ▀▄▄_                    ");
+            //Console.WriteLine(@"          `▀■∙+⌐+_▀▀▀▄__               ");
+            //Console.WriteLine(@"            `▀▄▄_∙∙╜∙-═▀▀▄_            ");
+            //Console.WriteLine(@"               `*▀▀▄_`°___█▄,          ");
+            //Console.WriteLine(@"                    ▀▄*═⌐╕⌐═█,         ");
+            //Console.WriteLine(@"                     `▌,__═⌐∙█         ");
+            //Console.WriteLine(@"                      █└──∙  ▐         ");
+            //Console.WriteLine(@"                     √▌ ___  ▐▌        ");
+            //Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
+            //Console.WriteLine(@"∙                                     ║");
+            //Console.WriteLine(@"║  CONGRATULATIONS ON SELLING         ∙");
+            //Console.WriteLine(@"∙  the▐█                              ║");
+            //Console.WriteLine(@"║     ▐█▄▄▄▄  ▄▄▄▄  ▄▄▄▄▄▄▄▄■  ▄▀▀▄   ∙");
+            //Console.WriteLine(@"∙     ▐█  ▐█ █▌  ██ █▌ ▐█  ██ ██▄▄█▌  ║");
+            //Console.WriteLine(@"║     ▐█  ▐█ ██__██ █▌ ▐█  ▐█ ██▄__   ∙");
+            //Console.WriteLine(@"∙      ▀   ▀   ▀▀▀  ▀  └▀   ▀   ▀▀▀   ║");
+            //Console.WriteLine(@"║                                     ∙");
+            //Console.WriteLine(@"■∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙══∙■");
+            //Console.WriteLine(@"               ▐▌,=══╖ ═¬_U▌           ");
+            //Console.WriteLine(@"              √▌ /   |/  /▐▌           ");
+            //Console.WriteLine(@"              █  ∙═══ ──═ ▐            ");
+            //Console.WriteLine(@"             ▐▌   -~─══Γ  █            ");
+            //Console.WriteLine(@"             ▐   |____/   ▌            ");
+            //Console.WriteLine(@"             █ =╛⌐═∙ ,═══ █            ");
+            //Console.WriteLine(@"             █ `∙¬__-∙__/_▐▌           ");
+            //Console.WriteLine(@"             ▐ (``* ∙ ╒∙* \▀▄          ");
+            //Console.WriteLine(@"             `█ `¬══___'∙,∙ '▀▄_       ");
+            //Console.WriteLine(@"              `▀, (   `)  _-⌐*'|▀▄     ");
+            //Console.WriteLine(@"                ▀▄,∙═_∙,∙╕|____╛ `▀■   ");
+            //Console.WriteLine(@"                 `▀▄, (   \`° ╥──¬ ▐▌  ");
+            //Console.WriteLine(@"                   `▀▄ \ ,∙∙  └═══┘ █  ");
+            //Console.WriteLine(@"                     ╙▌ '           ▐▌ ");
+            //Console.WriteLine(@"                      █              █ ");
+            //Console.WriteLine(@"                      █              █ ");
+            //Console.WriteLine(@"                      ▀              ▀ ");
+
             CreateArt(settings);
         }
 
@@ -148,7 +209,7 @@ namespace AsciiPhoto
             List<Letter> alphabet = AsciiHelper.GenerateAlphabetWithMap(settings);
 
             // Letters for brightness
-            Dictionary<string, float> alphabetForBrightness = GetAlphabetForBrightness(settings);
+            Dictionary<Letter, float> alphabetForBrightness = GetAlphabetForBrightness2(settings);
 
             if (settings.PrintFontMatrices)
             {
@@ -243,17 +304,17 @@ namespace AsciiPhoto
 
                     if (settings.NrCharactersInARow > 0 && settings.MatchBrightness)
                     {
-                        //fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
+                        fileProcessedConsoleMessage = $" ■ Image reduced in size (original size: {loadedBitmap.LoadedWidth}×{loadedBitmap.LoadedHeight}, adjusted size: {loadedBitmap.LoadedBitmap.Width}×{loadedBitmap.LoadedBitmap.Height})";
 
-                        //if (settings.Verbose)
-                        //{
-                        //    Console.WriteLine(fileProcessedConsoleMessage);
-                        //}
+                        if (settings.Verbose)
+                        {
+                            Console.WriteLine(fileProcessedConsoleMessage);
+                        }
 
-                        //// ************************************
-                        //// Generate the art based on brightness
-                        //// ************************************
-                        //finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
+                        // ************************************
+                        // Generate the art based on brightness
+                        // ************************************
+                        finalCharacterMap = AsciiHelper.GenerateAsciiFromBitmapByBrightness(settings, loadedBitmap.LoadedBitmap, alphabetForBrightness);
                     }
                     else
                     {
@@ -283,20 +344,23 @@ namespace AsciiPhoto
                     stopWatch.Start();
 
                     // Final art as text
-                    string resultForFile =
+                    string resultForFileRaw =
                         (!string.IsNullOrWhiteSpace(settings.OutputFile) || !settings.PrintResultsAsap) ?
                             AsciiHelper.GenerateAsciiArtString(settings, finalCharacterMap) :
                             string.Empty;
+
+                    string resultForFile = resultForFileRaw;
 
                     if (!string.IsNullOrWhiteSpace(settings.OutputFile))
                     {
                         // Write to file
                         using (StreamWriter sw = new StreamWriter(settings.OutputFile, !firstRun))
                         {
-                            sw.WriteLine(consoleContent);
-                            sw.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{counter}/{loadedBitmaps.Count}] Processed '{loadedBitmap.Path}' ({resultsObtainedMs:N0}ms)");
-                            sw.WriteLine(fileProcessedConsoleMessage);
-                            sw.WriteLine(resultForFile);
+                            //sw.WriteLine(consoleContent);
+                            //sw.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{counter}/{loadedBitmaps.Count}] Processed '{loadedBitmap.Path}' ({resultsObtainedMs:N0}ms)");
+                            //sw.WriteLine(fileProcessedConsoleMessage);
+                            string hidratedText = HidrateWithHtml(resultForFile);
+                            sw.WriteLine(hidratedText);
                             sw.WriteLine();
                         }
 
@@ -354,6 +418,58 @@ namespace AsciiPhoto
             return result;
         }
 
+        private static Dictionary<Letter, float> GetAlphabetForBrightness2(ConverterSettings settings)
+        {
+            Dictionary<Letter, float> result = new Dictionary<Letter, float>();
+
+            foreach (KeyValuePair<string, string[]> simpleLetter in LucidaConsole.GetFilteredMap(settings.Alphabet))
+            {
+                Letter createdLetter = AsciiHelper.CreateLetterFromFontData(settings, simpleLetter.Key);
+                float brightnessRounded = (float)Math.Round((decimal)createdLetter.CharacterBrightnessBasedOnPixels, 2);
+
+                bool brightnessExists = result.Where(r => r.Value == brightnessRounded).Any();
+
+                if (!brightnessExists)
+                {
+                    result.Add(createdLetter, brightnessRounded);
+                }
+            }
+
+            if (settings.InverseBrightness)
+            {
+                // Sort values from bright → dark
+                result = result.OrderBy(d => d.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }
+            else
+            {
+                // Sort values from bright → dark
+                result = result.OrderByDescending(d => d.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }
+
+            return result;
+        }
+
+        private static string HidrateWithHtml(string text)
+        {
+            StringBuilder result = new StringBuilder();
+            result.AppendLine("<html><head><style>body{font-size: 10px; font-family: Lucida Console} div{width:12px;display: inline-block}</style></head><body>");
+
+            result.AppendLine($"<pre>{text}</pre>");
+
+            foreach (string line in new LineReader(() => new StringReader(text)))
+            {
+                foreach (char c in line)
+                {
+                    result.Append($"<div>{EmojiOverlay.ApplyOverlay(c.ToString().Replace(" ", "&nbsp;", StringComparison.OrdinalIgnoreCase))}</div>");
+                }
+
+                result.AppendLine("<br />");
+            }
+
+            result.AppendLine("</body></html>");
+            return result.ToString();
+        }
+
         private static void PrintAlphabetWithProperties(List<Letter> alphabet)
         {
             foreach (Letter letter in alphabet)
@@ -369,7 +485,7 @@ namespace AsciiPhoto
             if (settings.Verbose)
             {
                 Console.ForegroundColor = origTextColor;
-                Console.WriteLine($" {AsciiHelper.DecorStart}");
+                Console.WriteLine($"    {AsciiHelper.DecorStart}");
             }
 
             for (int y = 0; y < letterMatrixToWriteToConsole.GetLength(1); y++)
@@ -377,7 +493,9 @@ namespace AsciiPhoto
                 if (settings.Verbose)
                 {
                     Console.ForegroundColor = origTextColor;
-                    Console.Write(" │ ");
+
+                    // Indent, so there are 3 character wide numbers
+                    Console.Write($"{y + 1,3} │ ");
                 }
 
                 for (int x = 0; x < letterMatrixToWriteToConsole.GetLength(0); x++)
@@ -397,7 +515,7 @@ namespace AsciiPhoto
 
             if (settings.Verbose)
             {
-                Console.WriteLine(AsciiHelper.DecorEnd.Indent(letterMatrixToWriteToConsole.GetLength(0) - AsciiHelper.DecorEnd.Length + 5, ' '));
+                Console.WriteLine(AsciiHelper.DecorEnd.Indent(letterMatrixToWriteToConsole.GetLength(0) - AsciiHelper.DecorEnd.Length + 8, ' '));
             }
         }
     }

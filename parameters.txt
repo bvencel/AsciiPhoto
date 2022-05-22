@@ -1,15 +1,15 @@
 ﻿--path
-D:\Work\Personal\AsciiPhoto GitHub\Test images\Buildings\new_pngfuel.com(19).png
+d:\Documents\OneDrive - Fortech srl\Fbrd\fbrd-logo-reduced.png
 --print-font-matrices
 false
 --print-results-asap
 false
 --pixels-between-rows
-1
+0
 --ratio
 60
 --chars-in-row
-80
+26
 --match-brightness
 false
 --verbose
@@ -19,7 +19,7 @@ false
 --return-to-start
 true
 --delay
-100
+0
 --loop-nr
 1
 --source
@@ -27,10 +27,12 @@ true
 --inverse
 true
 --brightness-offset
-0.2
+0.3
 --refresh-sources
 true
 --output-file
-D:\output.txt
+D:\output.html
 --min-pixel-darkness
 0.70
+--alphabet
+fbrd

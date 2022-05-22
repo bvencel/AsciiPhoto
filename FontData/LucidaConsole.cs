@@ -18,6 +18,7 @@ namespace AsciiPhoto
 
         /// <summary>
         /// Gets a dictionary containing the alphabet characters and their pixel maps.
+        /// "#'()*+,-./:&lt;=&gt;oOTUVXY[\]_`{|}~⌐¬x¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌▌▐Γ∩≡⌠⌡≈°∙√▀■▄█
         /// </summary>
         private static Dictionary<string, string[]> Map => new Dictionary<string, string[]>()
         {

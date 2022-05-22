@@ -1,4 +1,5 @@
 ﻿using AsciiPhoto.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,6 +13,8 @@ namespace AsciiPhoto.Helpers
         public const string DecorEnd = "∙────────────┘";
 
         public const string DecorStart = "┌────────────∙";
+
+        public const string FixedWidthAlphabet = "OUVXY░▒│╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌▌▐▀▄█";
 
         public static Letter CreateLetterFromFontData(ConverterSettings settings, string simpleLetter)
         {
@@ -80,14 +83,14 @@ namespace AsciiPhoto.Helpers
 
             if (settings.Verbose)
             {
-                result.AppendLine($" {DecorStart}");
+                result.AppendLine($"    {DecorStart}");
             }
 
             for (int y = 0; y < characterMatrix.GetLength(1); y++)
             {
                 if (settings.Verbose)
                 {
-                    result.Append(" │ ");
+                    result.Append($"{y + 1,3} │ ");
                 }
 
                 for (int x = 0; x < characterMatrix.GetLength(0); x++)
@@ -105,7 +108,7 @@ namespace AsciiPhoto.Helpers
 
             if (settings.Verbose)
             {
-                result.AppendLine(DecorEnd.Indent(characterMatrix.GetLength(0) - DecorEnd.Length + 5, ' '));
+                result.AppendLine(DecorEnd.Indent(characterMatrix.GetLength(0) - DecorEnd.Length + 8, ' '));
             }
 
             return result.ToString();
@@ -115,20 +118,20 @@ namespace AsciiPhoto.Helpers
         /// Matches the brightness of the image pixels with the brightness of the characters.
         /// Main entry point of the class.
         /// </summary>
-        public static string[,] GenerateAsciiFromBitmapByBrightness(ConverterSettings settings, Bitmap image, Dictionary<string, float> alphabet)
+        public static Letter[,] GenerateAsciiFromBitmapByBrightness(ConverterSettings settings, Bitmap image, Dictionary<Letter, float> alphabet)
         {
-            string[,] resultCharacterMap = new string[image.Width, image.Height];
+            Letter[,] resultCharacterMap = new Letter[image.Width, image.Height];
 
             if (settings.PrintResultsAsap && settings.Verbose)
             {
-                Console.WriteLine($" {DecorStart}");
+                Console.WriteLine($"    {DecorStart}");
             }
 
             for (int y = 0; y < image.Height; y++)
             {
                 if (settings.PrintResultsAsap && settings.Verbose)
                 {
-                    Console.Write(" │ ");
+                    Console.Write($"{y + 1,3} │ ");
                 }
 
                 for (int x = 0; x < image.Width; x++)
@@ -136,7 +139,7 @@ namespace AsciiPhoto.Helpers
                     Color colorAtTopPixel = image.GetPixel(x, y);
                     float brightness = ImageHelper.GetBrightness(colorAtTopPixel);
 
-                    string resultChar = MapBrightnessToAscii(settings, brightness, alphabet);
+                    Letter resultChar = MapBrightnessToAscii(settings, brightness, alphabet);
                     resultCharacterMap[x, y] = resultChar;
 
                     if (settings.PrintResultsAsap)
@@ -160,7 +163,7 @@ namespace AsciiPhoto.Helpers
 
             if (settings.PrintResultsAsap && settings.Verbose)
             {
-                Console.WriteLine(DecorEnd.Indent(resultCharacterMap.GetLength(0) - DecorEnd.Length + 5, ' '));
+                Console.WriteLine(DecorEnd.Indent(resultCharacterMap.GetLength(0) - DecorEnd.Length + 8, ' '));
             }
 
             return resultCharacterMap;
@@ -207,7 +210,7 @@ namespace AsciiPhoto.Helpers
             {
                 if (settings.Verbose)
                 {
-                    Console.WriteLine($" {DecorStart}");
+                    Console.WriteLine($"    {DecorStart}");
                 }
             }
 
@@ -217,7 +220,7 @@ namespace AsciiPhoto.Helpers
                 {
                     if (settings.Verbose)
                     {
-                        Console.Write(" │ ");
+                        Console.Write($"{row + 1,3} │ ");
                     }
                 }
 
@@ -244,7 +247,7 @@ namespace AsciiPhoto.Helpers
             {
                 if (settings.Verbose)
                 {
-                    Console.WriteLine(DecorEnd.Indent(resultCharacterMap.GetLength(0) - DecorEnd.Length + 5, ' '));
+                    Console.WriteLine(DecorEnd.Indent(resultCharacterMap.GetLength(0) - DecorEnd.Length + 8, ' '));
                 }
             }
 
@@ -346,7 +349,7 @@ namespace AsciiPhoto.Helpers
         /// <param name="brightness"></param>
         /// <param name="alphabet"></param>
         /// <returns></returns>
-        private static string MapBrightnessToAscii(ConverterSettings settings, float brightness, Dictionary<string, float> alphabet)
+        private static Letter MapBrightnessToAscii(ConverterSettings settings, float brightness, Dictionary<Letter, float> alphabet)
         {
             brightness += settings.BrightnessOffset;
 
